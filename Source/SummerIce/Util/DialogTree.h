@@ -10,7 +10,7 @@ struct DialogNode
 {
 	ECharacter Speaker;
 	FString Speech;
-	std::vector<uint32> answers;	// хранятся id следующих узлов-ответов на данную реплику
+	std::vector<uint32> answers;	// С…СЂР°РЅСЏС‚СЃСЏ id СЃР»РµРґСѓСЋС‰РёС… СѓР·Р»РѕРІ-РѕС‚РІРµС‚РѕРІ РЅР° РґР°РЅРЅСѓСЋ СЂРµРїР»РёРєСѓ
 };
 
 class SUMMERICE_API DialogTree
