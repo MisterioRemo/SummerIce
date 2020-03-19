@@ -1,0 +1,47 @@
+{
+  "dialog_id_0": {
+    "node_id": 0,
+    "character": "Lavinia",
+    "speech": "Question 1",
+    "type": "single",
+    "answers": [
+      {
+        "node_id": 1,
+        "character": "NPC",
+        "speech": "1",
+        "answers": [
+          {
+            "node_id": 2,
+            "character": "Lavinia",
+            "speech": "2",
+            "answers": [],
+            "next": 4
+          },
+          {
+            "node_id": 3,
+            "character": "Lavinia",
+            "speech": "3",
+            "answers": []
+          }
+        ]
+      },
+      {
+        "node_id": 4,
+        "character": "NPC",
+        "speech": "4",
+        "answers": [
+          {
+            "node_id": 5,
+            "character": "Lavinia",
+            "speech": "5",
+            "answers": []
+          }
+        ]
+      }
+    ]
+  },
+
+  "dialog_id_1": {
+
+  }
+}
