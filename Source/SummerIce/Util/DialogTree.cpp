@@ -1,4 +1,4 @@
-// Документация с примерами для nlohmann::json::parser_callback_t
+// Р”РѕРєСѓРјРµРЅС‚Р°С†РёСЏ СЃ РїСЂРёРјРµСЂР°РјРё РґР»СЏ nlohmann::json::parser_callback_t
 // https://nlohmann.github.io/json/classnlohmann_1_1basic__json_ab4f78c5f9fd25172eeec84482e03f5b7.html#ab4f78c5f9fd25172eeec84482e03f5b7
 
 
@@ -24,11 +24,11 @@ void DialogTree::LoadDialogFromJson(const int32 & LvlId, const int32 & DialogId)
 	std::ifstream IFile(TCHAR_TO_UTF8(*_FileName));
 
 	if (IFile.is_open()) {
-		// Удалить старые элементы, не освобождая память
+		// РЈРґР°Р»РёС‚СЊ СЃС‚Р°СЂС‹Рµ СЌР»РµРјРµРЅС‚С‹, РЅРµ РѕСЃРІРѕР±РѕР¶РґР°СЏ РїР°РјСЏС‚СЊ
 		_Dialog.Empty();
 
-		// Парсить только ту часть json, которая относится к заданному DialogId
-		// Ссылку на документацию с примерми см. в шапке файла
+		// РџР°СЂСЃРёС‚СЊ С‚РѕР»СЊРєРѕ С‚Сѓ С‡Р°СЃС‚СЊ json, РєРѕС‚РѕСЂР°СЏ РѕС‚РЅРѕСЃРёС‚СЃСЏ Рє Р·Р°РґР°РЅРЅРѕРјСѓ DialogId
+		// РЎСЃС‹Р»РєСѓ РЅР° РґРѕРєСѓРјРµРЅС‚Р°С†РёСЋ СЃ РїСЂРёРјРµСЂРјРё СЃРј. РІ С€Р°РїРєРµ С„Р°Р№Р»Р°
 		std::string DialogKey = "dialog_id_" + std::to_string(DialogId);
 
 		json::parser_callback_t cb = [&DialogId, &DialogKey](int depth, json::parse_event_t event, json& parsed)
@@ -64,11 +64,11 @@ void DialogTree::LoadDialogFromJson(const int32 & LvlId, const int32 & DialogId)
 		json J = json::parse(IFile, cb);
 		ParseNode(J[DialogKey]);
 
-		// Освободить лишнюю память
+		// РћСЃРІРѕР±РѕРґРёС‚СЊ Р»РёС€РЅСЋСЋ РїР°РјСЏС‚СЊ
 		_Dialog.Compact();
 		_Dialog.Shrink();
 
-		// Если всё загрузилось успешно, запоминаем номер текущего диалога
+		// Р•СЃР»Рё РІСЃС‘ Р·Р°РіСЂСѓР·РёР»РѕСЃСЊ СѓСЃРїРµС€РЅРѕ, Р·Р°РїРѕРјРёРЅР°РµРј РЅРѕРјРµСЂ С‚РµРєСѓС‰РµРіРѕ РґРёР°Р»РѕРіР°
 		_LvlId = LvlId;
 		_DialogId = DialogId;
 	}
