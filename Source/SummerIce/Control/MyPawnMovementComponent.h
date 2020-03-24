@@ -11,6 +11,9 @@ class SUMMERICE_API UMyPawnMovementComponent : public UPawnMovementComponent
 
 private:
 	void Sanitize();
+	FVector GetGravityDirection() const;
+	FVector GetPropReaction() const;
+	FVector GetFriction(const FVector & PropReaction, const FVector & Gravity) const;
 
 protected:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Parametrs", meta = (ClampMin = "0.0"))
@@ -18,6 +21,12 @@ protected:
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Parametrs", meta = (ClampMin = "0.0"))
 	float RunSpeed;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Parametrs", meta = (ClampMin = "0.0"))
+	float GravityScale;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Parametrs", meta = (ClampMin = "0.0"))
+	float Mass;
 
 public:
 	UMyPawnMovementComponent();
