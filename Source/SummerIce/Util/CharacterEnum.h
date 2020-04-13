@@ -5,6 +5,8 @@ UENUM(BlueprintType)
 enum class ECharacter: uint8
 {
 	Lavinia,
+	Elizabeth,
+	Object,
 	Error
 };
 
@@ -20,6 +22,10 @@ static ECharacter GetCharacterFromString(const FString & Name)
 	FString Character = Name.ToLower();
 	if (Character.Equals("lavinia"))
 		return ECharacter::Lavinia;
+	else if (Character.Equals("elizabeth"))
+		return ECharacter::Elizabeth;
+	else if (Character.Equals("object"))
+		return ECharacter::Object;
 
 	return ECharacter::Error;
 }
