@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include "Interface/InteractInterface.h"
 #include "GameFramework/Pawn.h"
 #include "Lavinia.generated.h"
 
@@ -7,20 +8,19 @@ class UArrowComponent;
 class UPaperSpriteComponent;
 class UCapsuleComponent;
 class UMyPawnMovementComponent;
-class AInteractableObject;
-
+class UWidgetComponent;
 
 UCLASS()
-class SUMMERICE_API ALavinia : public APawn
+class SUMMERICE_API ALavinia : public APawn, public IInteractInterface
 {
 	GENERATED_BODY()
-	friend class AInteractableObject;
 
 private:
 	// BEGIN Input
 	void MoveX(float AxisValue);
 	void InteractPressed();
-	void InteractReleased();
+	void ShowNextSpeach();
+	void ShowPrevSpeach();
 	// END Input
 
 	UFUNCTION()
@@ -39,6 +39,13 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	// BEGIN InteractInterface
+	virtual void ShowDialogWidget(const FString * Text /* = nullptr*/, const bool & bCanChooseLine /* = false*/) override;
+	virtual void HideDialogWidget() override;
+	virtual ECharacter GetName() const override;
+	virtual int32 GetDialogId() const override;
+	// END InteractInterface
+
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lavinia", meta = (AllowPrivateAccess = "true"))
 	UArrowComponent * _PlayerDirection;
@@ -52,10 +59,12 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lavinia", meta = (AllowPrivateAccess = "true"))
 	UMyPawnMovementComponent * _MovementComponent;
 
-	// Объект класса AInteractableObject, с которым можно взоимодейтсовать через Interact input 
-	AInteractableObject *_InteractableObject;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lavinia", meta = (AllowPrivateAccess = "true"))
+	UWidgetComponent * _DialogBubbleComponent;
+
+	bool bIsInteracting;
 
 protected:
-
+public:
 	
 };

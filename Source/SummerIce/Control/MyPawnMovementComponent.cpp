@@ -25,7 +25,7 @@ void UMyPawnMovementComponent::TickComponent(float DeltaTime, enum ELevelTick Ti
 	FVector Gravity = GetGravityDirection();
 	FVector PropReaction = GetPropReaction();
 	FVector AntiFriction = -1 * GetFriction(PropReaction, Gravity);
-	FVector DesiredMovementThisFrame = (_MovementInput * WalkSpeed + Gravity + PropReaction + AntiFriction) * DeltaTime;	
+	FVector DesiredMovementThisFrame = (_MovementInput * WalkSpeed + Gravity + PropReaction + AntiFriction) * DeltaTime;
 
 	if (!DesiredMovementThisFrame.IsNearlyZero()) {
 		FHitResult Hit;

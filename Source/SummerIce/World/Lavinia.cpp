@@ -7,8 +7,11 @@
 #include "Control/MyPawnMovementComponent.h"
 #include "Control/FollowingCamera.h"
 
-#include "World/InteractableObject.h"
-#include "Interface/InteractInterface.h"
+#include "Components/WidgetComponent.h"
+#include "Util/WidgetLibrary.h"
+#include "Widget/BubbleWidget.h"
+#include "Util/DialogSystem.h"
+
 
 ALavinia::ALavinia(const FObjectInitializer& ObjectInitializer)
 	:Super(ObjectInitializer)
@@ -31,8 +34,10 @@ ALavinia::ALavinia(const FObjectInitializer& ObjectInitializer)
 	_MovementComponent = CreateDefaultSubobject<UMyPawnMovementComponent>(TEXT("MovementComponent"));
 	_MovementComponent->UpdatedComponent = RootComponent;
 
-	AutoPossessPlayer = EAutoReceiveInput::Player0;
+	_DialogBubbleComponent = CreateDefaultSubobject<UWidgetComponent>("DialogBubbleWidget");
+	_DialogBubbleComponent->SetupAttachment(RootComponent);
 
+	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
 
 void ALavinia::BeginPlay()
@@ -41,6 +46,13 @@ void ALavinia::BeginPlay()
 	AFollowingCamera * Camera = GetWorld()->SpawnActor<AFollowingCamera>();
 	Camera->WhatShouldWeFollow(this);
 
+	if (UWidgetLibrary::DialogBubbleClass) {
+		_DialogBubbleComponent->SetWidgetClass(UWidgetLibrary::DialogBubbleClass);
+		_DialogBubbleComponent->SetWidgetSpace(EWidgetSpace::Screen);
+		_DialogBubbleComponent->GetUserWidgetObject()->SetVisibility(ESlateVisibility::Hidden);
+		//_DialogBubbleComponent->SetDrawSize(FVector2D(500.0f, 500.0f));
+	}
+
 	// AddDynamic должно вызываться единожды для одной функции,
 	// но OnComponentEndOverlap не работает, если "связывать" в конструкторе объекта
 	_PlayerSprite->OnComponentBeginOverlap.RemoveDynamic(this, &ALavinia::OnPlayerEnterBoxComponent);
@@ -48,19 +60,22 @@ void ALavinia::BeginPlay()
 
 	_PlayerSprite->OnComponentBeginOverlap.AddDynamic(this, &ALavinia::OnPlayerEnterBoxComponent);
 	_PlayerSprite->OnComponentEndOverlap.AddDynamic(this, &ALavinia::OnPlayerExitBoxComponent);
+
+	DialogSystem::AddSpeaker(Cast<IInteractInterface>(this));
+	bIsInteracting = false;
 }
 
 void ALavinia::OnPlayerEnterBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 													UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 													bool bFromSweep, const FHitResult& SweepResult)
 {
-	_InteractableObject = Cast<AInteractableObject>(OtherActor);
+	DialogSystem::AddSpeaker(Cast<IInteractInterface>(OtherActor));
 }
 
 void ALavinia::OnPlayerExitBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 												   UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	_InteractableObject = nullptr;
+	DialogSystem::RemoveSpeaker(Cast<IInteractInterface>(OtherActor));
 }
 
 UPawnMovementComponent* ALavinia::GetMovementComponent() const
@@ -79,24 +94,55 @@ void ALavinia::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	InputComponent->BindAxis("MoveX", this, &ALavinia::MoveX);
 	InputComponent->BindAction("Interact", EInputEvent::IE_Pressed, this, &ALavinia::InteractPressed);
-	InputComponent->BindAction("Interact", EInputEvent::IE_Released, this, &ALavinia::InteractReleased);
-
+	InputComponent->BindAction("ShowNext", EInputEvent::IE_Pressed, this, &ALavinia::ShowNextSpeach);
+	InputComponent->BindAction("ShowPrev", EInputEvent::IE_Pressed, this, &ALavinia::ShowPrevSpeach);
 }
 
 void ALavinia::MoveX(float AxisValue)
 {
-	if (_MovementComponent && (_MovementComponent->UpdatedComponent == RootComponent)) {
+	// если игрок в процессе разговора, то он не может двигаться
+	if (!bIsInteracting && _MovementComponent
+		&& (_MovementComponent->UpdatedComponent == RootComponent)) {
 		_MovementComponent->AddInputVector(_PlayerDirection->GetForwardVector() * AxisValue);
-	}
+	}	
 }
 
 void ALavinia::InteractPressed()
 {
-	if (_InteractableObject) {
-		_InteractableObject->ShowDialogWidget();
+	bIsInteracting = DialogSystem::StartOrContinueDialog();
+}
+
+void ALavinia::ShowNextSpeach()
+{
+	if (bIsInteracting) DialogSystem::NextNode();	
+}
+
+void ALavinia::ShowPrevSpeach()
+{
+	if (bIsInteracting) DialogSystem::PrevNode();	
+}
+
+// BEGIN InteractInterface
+void ALavinia::ShowDialogWidget(const FString * Text /* = nullptr*/, const bool & bCanChooseLine /* = false*/)
+{
+	auto Widget = Cast<UBubbleWidget>(_DialogBubbleComponent->GetUserWidgetObject());
+	if (Text && Widget) {
+		Widget->SetVisibility(ESlateVisibility::Visible);
+		Widget->SetText(*Text);
 	}
 }
 
-void ALavinia::InteractReleased()
-{	
+void ALavinia::HideDialogWidget() {
+	_DialogBubbleComponent->GetUserWidgetObject()->SetVisibility(ESlateVisibility::Hidden);	
 }
+
+ECharacter ALavinia::GetName() const 
+{
+	return ECharacter::Lavinia;
+}
+
+int32 ALavinia::GetDialogId() const
+{
+	return -1;
+}
+// END InteractInterface
