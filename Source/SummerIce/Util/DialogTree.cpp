@@ -16,7 +16,7 @@ void DialogTree::SetFileName(const int32 & LvlId)
 								TEXT("Assets/Dialogs/Chapter_" + FString::FromInt(LvlId) + ".json"));
 }
 
-void DialogTree::LoadDialogFromJson(const int32 & LvlId, const int32 & DialogId)
+void DialogTree::LoadDialogFromJson(const int32 & LvlId)
 {
 	using json = nlohmann::json;
 
@@ -25,59 +25,51 @@ void DialogTree::LoadDialogFromJson(const int32 & LvlId, const int32 & DialogId)
 
 	if (IFile.is_open()) {
 		// Удалить старые элементы, не освобождая память
-		_Dialog.Empty();
-
-		// Парсить только ту часть json, которая относится к заданному DialogId
-		// Ссылку на документацию с примерми см. в шапке файла
-		std::string DialogKey = "dialog_id_" + std::to_string(DialogId);
-
-		json::parser_callback_t cb = [&DialogId, &DialogKey](int depth, json::parse_event_t event, json& parsed)
-		{
-			if (event == json::parse_event_t::key) {
-				if (parsed.dump().find("dialog_id_") != std::string::npos && parsed != json(DialogKey))
-					return false;
-				return true;
-			}
-			else return true;
-		};
-		
+		_Dialogs.Empty();
+		DialogMap DialogNodes;
+				
 		std::function<void(json)> ParseNode;
-		ParseNode = [this, &ParseNode](const json &J) -> void
+		ParseNode = [this, &ParseNode, &DialogNodes](const json &J) -> void
 		{
 			DialogNode Node;
-			uint32 Id = static_cast<uint32>(J["node_id"]);
+			int32 Id = static_cast<int32>(J["node_id"]);
 			Node.Speaker = GetCharacterFromString(J["character"].get<std::string>().c_str());
-			Node.Speech = J["speech"].get<std::string>().c_str();
+			Node.Speech = UTF8_TO_TCHAR(J["speech"].get<std::string>().c_str());
 
 			if (J.find("answers") != J.end()) {
 				for (const auto &Answer : J["answers"]) {
 					ParseNode(Answer);
-					Node.answers.push_back(static_cast<uint32>(Answer["node_id"]));
+					Node.Answers.Emplace(static_cast<int32>(Answer["node_id"]));
 				}
 			}
 			if (J.find("next") != J.end())
-				Node.answers.push_back(static_cast<uint32>(J["next"]));
-			_Dialog.Emplace(Id, Node);
+				Node.Answers.Emplace(static_cast<int32>(J["next"]));
+			DialogNodes.Emplace(Id, Node);
 		};
 
-
-		json J = json::parse(IFile, cb);
-		ParseNode(J[DialogKey]);
+		json J = json::parse(IFile);
+		for (const auto &Dialog : J["dialogs"]) {
+			DialogNodes.Empty();
+			int32 Id = static_cast<int32>(Dialog["dialog_id"]);
+			ParseNode(Dialog["nodes"]);
+			_Dialogs.Emplace(Id, MoveTemp(DialogNodes));
+		}
 
 		// Освободить лишнюю память
-		_Dialog.Compact();
-		_Dialog.Shrink();
-
-		// Если всё загрузилось успешно, запоминаем номер текущего диалога
-		_LvlId = LvlId;
-		_DialogId = DialogId;
+		_Dialogs.Compact();
+		_Dialogs.Shrink();
 	}
 	else 
 		UE_LOG(LogTemp, Warning, TEXT("DialogTree: can't open file %s"), *_FileName);
 
 }
 
-const DialogNode* DialogTree::GetNodeById(const int32 & NodeId) const
+DialogTree::DialogMap* DialogTree::GetDialogById(const int32 & DialogId)
 {
-	return _Dialog.Find(NodeId);
+	return _Dialogs.Find(DialogId);
+}
+
+DialogNode* DialogTree::GetNodeById(DialogTree::DialogMap *CurrentDialog, const int32 & NodeId)
+{
+	return CurrentDialog->Find(NodeId);
 }

@@ -1,41 +1,39 @@
 #pragma once
 
-//#include "CoreMinimal.h"
 #include "Util/CharacterEnum.h"
-#include <vector>
 
-class UDialogWidget;
+class DialogSystem;
 
 struct DialogNode
 {
 	ECharacter Speaker;
 	FString Speech;
-	std::vector<uint32> answers;	// хранятся id следующих узлов-ответов на данную реплику
+	TArray<int32> Answers;	// хранятся id следующих узлов-ответов на данную реплику
 };
 
 class SUMMERICE_API DialogTree
 {
-	friend UDialogWidget;
+	friend DialogSystem;
+
+public:
+	using DialogMap = TMap<int32, DialogNode>;
 
 private:
 	void SetFileName(const int32 & LvlId);
 
 protected:
-	void LoadDialogFromJson(const int32 & LvlId, const int32 & DialogId);
+	void LoadDialogFromJson(const int32 & LvlId);
 
 public:
 	DialogTree() {};
 	~DialogTree() {};
 
-	const DialogNode* GetNodeById(const int32 & NodeId) const;
-	const int32 GetLevelId() const { return _LvlId; }
-	const int32 GetDialogId() const { return _DialogId; }
+	DialogTree::DialogMap * GetDialogById(const int32 & DialogId);
+	DialogNode* GetNodeById(DialogTree::DialogMap* CurrentDialog, const int32 & NodeId);
 	
 private:
 	FString _FileName;
-	int32 _LvlId;
-	int32 _DialogId;
-	TMap<uint32, DialogNode> _Dialog;
+	TMap<int32, DialogMap> _Dialogs;
 
 protected:
 
