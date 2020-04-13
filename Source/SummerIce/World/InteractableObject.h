@@ -35,7 +35,10 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	// begin InteractInterface
-	virtual void ShowDialogWidget() override;
+	virtual void ShowDialogWidget(const FString * Text /* = nullptr*/, const bool & bCanChooseLine /* = false*/) override;
+	virtual void HideDialogWidget() override;
+	virtual ECharacter GetName() const override;
+	virtual int32 GetDialogId() const override;
 	// end InteractInterface
 
 private:

@@ -69,11 +69,20 @@ void AInteractableObject::OnPlayerExitBoxComponent(UPrimitiveComponent* Overlapp
 
 
 // begin InteractInterface
-void AInteractableObject::ShowDialogWidget()
+void AInteractableObject::ShowDialogWidget(const FString * Text /* = nullptr*/, const bool & bCanChooseLine /* = false*/)
 {
-	AMyPlayerController * Controller = Cast<AMyPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
-	if (bCanInteract && IsValid(Controller)) {
-		Controller->ShowDialogWidget();
-	}
+}
+void AInteractableObject::HideDialogWidget()
+{
+}
+
+ECharacter AInteractableObject::GetName() const
+{
+	return ECharacter::Object;
+}
+
+int32 AInteractableObject::GetDialogId() const
+{
+	return -1;
 }
 // end InteractInterface
