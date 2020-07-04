@@ -18,6 +18,12 @@ AFollowingCamera::AFollowingCamera()
 	//_CameraComponent->ProjectionMode = ECameraProjectionMode::Orthographic;
 	//_CameraComponent->OrthoWidth = 480.0f;
 	//_CameraComponent->AspectRatio = 16.0f / 9.0f;
+
+	_CameraComponent->PostProcessSettings.bOverride_BloomIntensity = true;
+	_CameraComponent->PostProcessSettings.BloomIntensity = 0.0f;
+	_CameraComponent->PostProcessSettings.bOverride_VignetteIntensity = true;
+	_CameraComponent->PostProcessSettings.VignetteIntensity = 0.0f;
+
 	_CameraComponent->SetWorldRotation(FRotator(0.0f, -90.0f, 0.0f));
 	_CameraComponent->SetupAttachment(RootComponent);
 }
@@ -26,7 +32,7 @@ void AFollowingCamera::BeginPlay()
 {
 	Super::BeginPlay();
 
-	_CurrentLocation = FVector(0.0, CAMERA_DISTANCE_TO_OWNER, -135.0f);
+	_CurrentLocation = FVector(0.0, CAMERA_DISTANCE_TO_OWNER, 57.0f);
 
 	// Основная камера
 	APlayerController * Controller = UGameplayStatics::GetPlayerController(this, 0);
