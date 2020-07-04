@@ -69,13 +69,19 @@ void ALavinia::OnPlayerEnterBoxComponent(UPrimitiveComponent* OverlappedComp, AA
 													UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 													bool bFromSweep, const FHitResult& SweepResult)
 {
-	DialogSystem::AddSpeaker(Cast<IInteractInterface>(OtherActor));
+	if (OtherComp->GetName() == TEXT("OuterDialogBoxComponent"))
+		DialogSystem::AddSpeaker(Cast<IInteractInterface>(OtherActor));
+	else if (OtherComp->GetName() == TEXT("InnerDialogBoxComponent"))
+		DialogSystem::RemoveSpeaker(Cast<IInteractInterface>(OtherActor));
 }
 
 void ALavinia::OnPlayerExitBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 												   UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	DialogSystem::RemoveSpeaker(Cast<IInteractInterface>(OtherActor));
+	if (OtherComp->GetName() == TEXT("OuterDialogBoxComponent"))
+		DialogSystem::RemoveSpeaker(Cast<IInteractInterface>(OtherActor));
+	else if (OtherComp->GetName() == TEXT("InnerDialogBoxComponent"))
+		DialogSystem::AddSpeaker(Cast<IInteractInterface>(OtherActor));
 }
 
 UPawnMovementComponent* ALavinia::GetMovementComponent() const

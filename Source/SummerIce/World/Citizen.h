@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "GameFramework/Pawn.h"
 #include "Interface/InteractInterface.h"
@@ -14,10 +14,27 @@ class SUMMERICE_API ACitizen : public APawn, public IInteractInterface
 {
 	GENERATED_BODY()
 
+private:	
+	UFUNCTION()
+	void OnPlayerEnterBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnPlayerExitBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+protected:
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
+
+	// "Выскакивание" иконки, когда игрок неподалёку
+	UFUNCTION(BlueprintImplementableEvent, Category = "Pop up")
+	void OnPopUp();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Pop up")
+	void OnPopUpEnd();
+
 public:
 	ACitizen();
-	virtual void Tick(float DeltaTime) override;
-	//virtual void SetupPlayerInputComponent(class UInputComponent* CitizenInputComponent) override;
+
 
 	// BEGIN InteractInterface
 	virtual void ShowDialogWidget(const FString * Text /* = nullptr*/, const bool & bCanChooseLine /* = false*/) override;
@@ -25,10 +42,8 @@ public:
 	virtual ECharacter GetName() const override; 
 	virtual int32 GetDialogId() const override;
 	// END InteractInterface
-protected:
-	virtual void BeginPlay() override;
 
-private:	
+
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
@@ -38,7 +53,10 @@ private:
 	UPaperSpriteComponent *_CitizenSprite;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
-	UBoxComponent *_BoxComponent;
+	UBoxComponent *_InnerBoxComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
+	UBoxComponent *_OuterBoxComponent;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
 	UWidgetComponent * _DialogBubbleComponent;
@@ -50,5 +68,8 @@ private:
 	int32 _DialogId;
 
 protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
+	UPaperSpriteComponent *_InteractiveSprite;
+
 public:
 };
