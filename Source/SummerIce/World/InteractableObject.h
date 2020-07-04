@@ -2,6 +2,7 @@
 
 #include "GameFramework/Actor.h"
 #include "Interface/InteractInterface.h"
+#include "Util/GameItem.h"
 #include "InteractableObject.generated.h"
 
 class UPaperSpriteComponent;
@@ -54,4 +55,7 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Property", meta = (AllowPrivateAccess = "true"))
 	UBoxComponent *_BoxComponent;
+
+	UPROPERTY(EditAnywhere, Category = "Property", meta = (AllowPrivateAccess = "true"))
+	EGameItem ObjectType = EGameItem::None;
 };
