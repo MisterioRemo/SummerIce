@@ -1,0 +1,48 @@
+﻿{
+  "dialogs": [
+    {
+      "dialog_id": 0,
+      "nodes": {
+        "node_id": 0,
+        "character": "Lavinia",
+        "speech": "Привет!",
+        "answers": [
+          {
+            "node_id": 1,
+            "character": "Elizabeth",
+            "speech": "Привет. Это должен быть достаточно длинный текст, чтобы протестировать размер бабла.",
+            "answers": [
+              {
+                "node_id": 2,
+                "character": "Lavinia",
+                "speech": "Есть минутка.",
+                "answers": [],
+                "next": 4
+              },
+              {
+                "node_id": 3,
+                "character": "Lavinia",
+                "speech": "Пока.",
+                "answers": []
+              }
+            ]
+          },
+          {
+            "node_id": 4,
+            "character": "Elizabeth",
+            "speech": "Я спешу.",
+            "answers": [
+              {
+                "node_id": 5,
+                "character": "Lavinia",
+                "speech": "Пока.",
+                "answers": []
+              }
+            ]
+          }
+        ]
+      }      
+    }
+
+  ]
+}

@@ -121,7 +121,8 @@ void DialogSystem::PrevNode()
 
 bool DialogSystem::StartOrContinueDialog()
 {
-	for (const auto& Speaker : _Speakers) Speaker.Value->HideDialogWidget();	
+	for (const auto& Speaker : _Speakers)
+		Speaker.Value->HideDialogWidget();	
 
 	if (IsDialogValid() && IsNodeValid()) {
 		ShowCurrentNode();

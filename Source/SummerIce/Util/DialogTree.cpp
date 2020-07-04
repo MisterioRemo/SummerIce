@@ -13,7 +13,7 @@
 void DialogTree::SetFileName(const int32 & LvlId)
 {
 	_FileName = FPaths::Combine(FPaths::ProjectContentDir(),
-								TEXT("Assets/Dialogs/Chapter_" + FString::FromInt(LvlId) + ".json"));
+								TEXT("Dialogs/Chapter_" + FString::FromInt(LvlId) + ".json"));
 }
 
 void DialogTree::LoadDialogFromJson(const int32 & LvlId)
