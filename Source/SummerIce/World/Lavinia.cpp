@@ -30,6 +30,10 @@ ALavinia::ALavinia(const FObjectInitializer& ObjectInitializer)
 	
 	_PlayerSprite = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("PlayerSprite"));
 	_PlayerSprite->SetupAttachment(_PlayerDirection);
+  _PlayerSprite->SetCollisionProfileName(TEXT("Pawn"));
+  //_PlayerSprite->SetGenerateOverlapEvents(true);  
+	_PlayerSprite->OnComponentBeginOverlap.AddDynamic(this, &ALavinia::OnPlayerEnterBoxComponent);
+	_PlayerSprite->OnComponentEndOverlap.AddDynamic(this, &ALavinia::OnPlayerExitBoxComponent);
 
 	_MovementComponent = CreateDefaultSubobject<UMyPawnMovementComponent>(TEXT("MovementComponent"));
 	_MovementComponent->UpdatedComponent = RootComponent;
@@ -52,14 +56,6 @@ void ALavinia::BeginPlay()
 		_DialogBubbleComponent->GetUserWidgetObject()->SetVisibility(ESlateVisibility::Hidden);
 		//_DialogBubbleComponent->SetDrawSize(FVector2D(500.0f, 500.0f));
 	}
-
-	// AddDynamic должно вызываться единожды для одной функции,
-	// но OnComponentEndOverlap не работает, если "связывать" в конструкторе объекта
-	_PlayerSprite->OnComponentBeginOverlap.RemoveDynamic(this, &ALavinia::OnPlayerEnterBoxComponent);
-	_PlayerSprite->OnComponentEndOverlap.RemoveDynamic(this, &ALavinia::OnPlayerExitBoxComponent);
-
-	_PlayerSprite->OnComponentBeginOverlap.AddDynamic(this, &ALavinia::OnPlayerEnterBoxComponent);
-	_PlayerSprite->OnComponentEndOverlap.AddDynamic(this, &ALavinia::OnPlayerExitBoxComponent);
 
 	DialogSystem::AddSpeaker(Cast<IInteractInterface>(this));
 	bIsInteracting = false;

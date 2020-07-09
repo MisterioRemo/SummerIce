@@ -1,5 +1,4 @@
 ﻿#pragma once
-
 #include "GameFramework/Pawn.h"
 #include "Interface/InteractInterface.h"
 #include "Citizen.generated.h"
@@ -15,15 +14,15 @@ class SUMMERICE_API ACitizen : public APawn, public IInteractInterface
 	GENERATED_BODY()
 
 private:	
-	UFUNCTION()
-	void OnPlayerEnterBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+  UFUNCTION()
+  void OnPlayerEnterBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-	UFUNCTION()
-	void OnPlayerExitBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+  UFUNCTION()
+  void OnPlayerExitBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 protected:
 	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaTime) override;
+	//virtual void Tick(float DeltaTime) override;
 
 	// "Выскакивание" иконки, когда игрок неподалёку
 	UFUNCTION(BlueprintImplementableEvent, Category = "Pop up")
@@ -33,8 +32,7 @@ protected:
 	void OnPopUpEnd();
 
 public:
-	ACitizen();
-
+	ACitizen(const FObjectInitializer& ObjectInitializer);
 
 	// BEGIN InteractInterface
 	virtual void ShowDialogWidget(const FString * Text /* = nullptr*/, const bool & bCanChooseLine /* = false*/) override;
@@ -43,8 +41,6 @@ public:
 	virtual int32 GetDialogId() const override;
 	// END InteractInterface
 
-
-
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
 	UArrowComponent * _CitizenDirection;
@@ -52,10 +48,10 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
 	UPaperSpriteComponent *_CitizenSprite;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
 	UBoxComponent *_InnerBoxComponent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
 	UBoxComponent *_OuterBoxComponent;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
@@ -65,11 +61,11 @@ private:
 	ECharacter _CharacterName;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
-	int32 _DialogId;
+	int32 _DialogId = 0;
 
-protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
 	UPaperSpriteComponent *_InteractiveSprite;
 
+protected:
 public:
 };
