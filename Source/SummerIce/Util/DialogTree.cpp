@@ -51,7 +51,7 @@ void DialogTree::LoadDialogFromJson(const int32 & LvlId)
 		for (const auto &Dialog : J["dialogs"]) {
 			DialogNodes.Empty();
 			int32 Id = static_cast<int32>(Dialog["dialog_id"]);
-			ParseNode(Dialog["nodes"]);
+      for(const auto &Node : Dialog["nodes"]) ParseNode(Node);
 			_Dialogs.Emplace(Id, MoveTemp(DialogNodes));
 		}
 

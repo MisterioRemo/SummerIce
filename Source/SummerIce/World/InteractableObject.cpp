@@ -83,6 +83,6 @@ ECharacter AInteractableObject::GetName() const
 
 int32 AInteractableObject::GetDialogId() const
 {
-	return -1;
+	return _DialogId;
 }
 // end InteractInterface

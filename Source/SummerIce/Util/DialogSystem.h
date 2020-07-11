@@ -30,17 +30,17 @@ public:
 
 private:
 	static DialogTree* _DialogTree;					// содержит все диалоги уровня
-	static DialogTree::DialogMap* _Dialog;			// текущий диалог (содержит все узлы)	
+	static DialogTree::DialogMap* _Dialog;  // текущий диалог (содержит все узлы)	
 	static int32 _DialogId;
-	static DialogNode* _Node;						// текущий узел
+	static DialogNode* _Node;						    // текущий узел
 
 	static int32 _LaviniaNodeId;
 	static TArray<int32>* _LaviniaNodeArray;
 
-	static TMap<ECharacter, IInteractInterface*> _Speakers;		// участники диалога, попадают по триггеру, удаляются так же
+	static TMap<ECharacter, IInteractInterface*> _Speakers;		// участники диалога, попадают по триггеру, удаляются также
 	static TMap<int32, int32> _DialogNodeMap;					// dialogId - nodeId
-																// свзязь между диалогом и нодой,
-																// на которой закончился разговор в последний раз
+																                    // свзязь между диалогом и нодой,
+																                    // на которой закончился разговор в последний раз
 protected:
 public:
 };

@@ -41,6 +41,7 @@ ACitizen::ACitizen(const FObjectInitializer& ObjectInitializer)
 
   _InteractiveSprite = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("IneractableIcon"));
   _InteractiveSprite->SetupAttachment(RootComponent);
+  _InteractiveSprite->SetCollisionProfileName(TEXT("NoCollision"));
 
   // AddDynamic должно вызываться единожды для одной функции,
   // но OnComponentEndOverlap не работает, если "связывать" в конструкторе объекта
@@ -112,6 +113,6 @@ ECharacter ACitizen::GetName() const
 }
 int32 ACitizen::GetDialogId() const
 {
-  return 0;
+  return _DialogId;
 }
 // END InteractInterface

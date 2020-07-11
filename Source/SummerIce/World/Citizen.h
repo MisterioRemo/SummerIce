@@ -61,7 +61,7 @@ private:
 	ECharacter _CharacterName;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
-	int32 _DialogId = 0;
+	int32 _DialogId = -1;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
 	UPaperSpriteComponent *_InteractiveSprite;

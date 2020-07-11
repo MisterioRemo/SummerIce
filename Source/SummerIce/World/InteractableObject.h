@@ -58,4 +58,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Property", meta = (AllowPrivateAccess = "true"))
 	EGameItem ObjectType = EGameItem::None;
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Property", meta = (AllowPrivateAccess = "true"))
+  int32 _DialogId;
 };
