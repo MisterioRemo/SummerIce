@@ -52,12 +52,11 @@ bool DialogSystem::IsDialogValid()
 			_Dialog = _DialogTree->GetDialogById(_DialogId);
 			if (_Dialog) return true;			
 		}
+    return false;
 	}
 	else {
 		return true;
 	}
-
-	return false;
 }
 
 bool DialogSystem::IsNodeValid()
@@ -77,11 +76,18 @@ bool DialogSystem::IsNodeValid()
 		return true;
 	}
 
+  _DialogId = -1;
 	return false;	
 }
 
 void DialogSystem::ShowCurrentNode()
 {
+  // пропустить пустую ноду и перейти к следующей
+  if (_Node->Speaker == ECharacter::Error) {
+    ChooseNextNode();
+    IsNodeValid();
+  }
+
 	if (const auto& Actor = _Speakers.Find(_Node->Speaker)) {
 		bool bCanChoose = (_LaviniaNodeArray) ? true : false;
 		(*Actor)->ShowDialogWidget(&_Node->Speech, bCanChoose);

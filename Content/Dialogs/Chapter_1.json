@@ -44,17 +44,22 @@
       "nodes": [
         {
           "node_id": 0,
-          "character": "Lavinia",
-          "speech": "Взять",
-          "answers": [],
-          "next": 1
-        },
-        {
-          "node_id": 1,
-          "character": "Lavinia",
-          "speech": "Не взять",
-          "answers": [],
-          "next": 0
+          "character": "",
+          "speech": "",
+          "answers": [
+            {
+              "node_id": 1,
+              "character": "Lavinia",
+              "speech": "Взять",
+              "answers": []
+            },
+            {
+              "node_id": 2,
+              "character": "Lavinia",
+              "speech": "Не взять",
+              "answers": []
+            }
+          ]
         }
       ]
     }

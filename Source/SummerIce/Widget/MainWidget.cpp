@@ -30,6 +30,11 @@ bool UMainWidget::FindPlayerCharacter()
 
 void UMainWidget::OnPressRightButton()
 {
+  if (Player->bIsInteracting) {
+    Player->ShowNextSpeach();
+    return;
+  }
+
   bMoving = true;
   AxisValue = 1.0;
 }
@@ -41,6 +46,11 @@ void UMainWidget::OnReleaseRightButton()
 
 void UMainWidget::OnPressLeftButton()
 {
+  if (Player->bIsInteracting) {
+    Player->ShowPrevSpeach();
+    return;
+  }
+
   bMoving = true;
   AxisValue = -1.0;
 }

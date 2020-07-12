@@ -130,6 +130,7 @@ void ALavinia::ShowDialogWidget(const FString * Text /* = nullptr*/, const bool 
 	auto Widget = Cast<UBubbleWidget>(_DialogBubbleComponent->GetUserWidgetObject());
 	if (Text && Widget) {
 		Widget->SetVisibility(ESlateVisibility::Visible);
+    Widget->SetArrowsVisibility(bCanChooseLine);
 		Widget->SetText(*Text);
 	}
 }

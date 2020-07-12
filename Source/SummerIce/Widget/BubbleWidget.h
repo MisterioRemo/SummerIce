@@ -12,11 +12,18 @@ class SUMMERICE_API UBubbleWidget : public UUserWidget
 private:
 protected:
 	virtual bool Initialize() override;
+
 public:
 	UBubbleWidget(const FObjectInitializer& ObjectInitializer);
 	void SetText(const FString & Text);
+  void SetArrowsVisibility(const bool & IsVisible);
+  void SetRightArrowVisibility(const bool & IsVisible);
+  void SetLeftArrowVisibility(const bool & IsVisible);
 
 private:
+  UWidget * _RightArrow;
+  UWidget * _LeftArrow;
+
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widget Text")
 	FString _Text;
