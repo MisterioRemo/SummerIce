@@ -3,6 +3,7 @@
 #include "UObject/ConstructorHelpers.h"
 
 TSubclassOf<UUserWidget> UWidgetLibrary::DialogBubbleClass;
+TSubclassOf<UUserWidget> UWidgetLibrary::MainInterfaceClass;
 
 UWidgetLibrary::UWidgetLibrary()
 {
@@ -14,4 +15,9 @@ UWidgetLibrary::UWidgetLibrary()
 		static ConstructorHelpers::FClassFinder<UUserWidget> Finded(TEXT("WidgetBlueprintGeneratedClass'/Game/Widget/W_Bubble.W_Bubble_C'"));
 		if (Finded.Succeeded())	DialogBubbleClass = Finded.Class;
 	}
+
+  if (!MainInterfaceClass) {
+    static ConstructorHelpers::FClassFinder<UUserWidget> Finded(TEXT("WidgetBlueprintGeneratedClass'/Game/Widget/W_Main.W_Main_C'"));
+    if (Finded.Succeeded())	MainInterfaceClass = Finded.Class;
+  }
 }

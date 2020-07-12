@@ -3,6 +3,8 @@
 #include "GameFramework/GameModeBase.h"
 #include "SummerIceGameModeBase.generated.h"
 
+class UMainWidget;
+
 UCLASS()
 class SUMMERICE_API ASummerIceGameModeBase : public AGameModeBase
 {
@@ -16,5 +18,8 @@ public:
 
 private:
 protected:
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+  UMainWidget * _MainUI;
+
 public:
 };

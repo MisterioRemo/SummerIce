@@ -9,11 +9,14 @@ class UPaperSpriteComponent;
 class UCapsuleComponent;
 class UMyPawnMovementComponent;
 class UWidgetComponent;
+class UMainWidget;
 
 UCLASS()
 class SUMMERICE_API ALavinia : public APawn, public IInteractInterface
 {
-	GENERATED_BODY()
+  GENERATED_BODY()
+
+  friend class UMainWidget;
 
 private:
 	// BEGIN Input

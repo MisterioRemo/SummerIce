@@ -18,4 +18,5 @@ private:
 protected:
 public:
 	static TSubclassOf<UUserWidget> DialogBubbleClass;
+  static TSubclassOf<UUserWidget> MainInterfaceClass;
 };
