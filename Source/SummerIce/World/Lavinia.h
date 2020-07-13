@@ -2,6 +2,7 @@
 
 #include "Interface/InteractInterface.h"
 #include "GameFramework/Pawn.h"
+#include "Util/GameItem.h"
 #include "Lavinia.generated.h"
 
 class UArrowComponent;
@@ -49,6 +50,9 @@ public:
 	virtual int32 GetDialogId() const override;
 	// END InteractInterface
 
+	void AddGameItem(const EGameItem & Item);
+	bool HasItem(const EGameItem & Item) const;
+
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lavinia", meta = (AllowPrivateAccess = "true"))
 	UArrowComponent * _PlayerDirection;
@@ -67,7 +71,8 @@ private:
 
 	bool bIsInteracting;
 
+	TArray<EGameItem> ObtainedItems;
+
 protected:
 public:
-	
 };

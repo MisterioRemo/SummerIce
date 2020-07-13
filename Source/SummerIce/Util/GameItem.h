@@ -2,7 +2,7 @@
 #include "GameItem.generated.h"
 
 UENUM(BlueprintType)
-enum class SUMMERICE_API EGameItem : uint8
+enum class EGameItem : uint8
 {
 	None,
 	Money,

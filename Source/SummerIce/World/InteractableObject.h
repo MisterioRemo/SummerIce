@@ -22,8 +22,6 @@ private:
 	void OnPlayerExitBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 protected:
-	virtual void BeginPlay() override;
-
 	// "Выскакивание" иконки, когда игрок неподалёку
 	UFUNCTION(BlueprintImplementableEvent, Category = "Pop up")
 	void OnPopUp();
@@ -33,7 +31,6 @@ protected:
 	
 public:	
 	AInteractableObject(const FObjectInitializer& ObjectInitializer);
-	virtual void Tick(float DeltaTime) override;
 
 	// begin InteractInterface
 	virtual void ShowDialogWidget(const FString * Text /* = nullptr*/, const bool & bCanChooseLine /* = false*/) override;
@@ -41,12 +38,8 @@ public:
 	virtual ECharacter GetName() const override;
 	virtual int32 GetDialogId() const override;
 	// end InteractInterface
-
+  
 private:
-	// с данным объектом можно взаимодействовать
-	bool bCanInteract;
-
-protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Property", meta = (AllowPrivateAccess = "true"))
 	UPaperSpriteComponent *_BodySprite;
 
@@ -57,8 +50,13 @@ protected:
 	UBoxComponent *_BoxComponent;
 
 	UPROPERTY(EditAnywhere, Category = "Property", meta = (AllowPrivateAccess = "true"))
-	EGameItem ObjectType = EGameItem::None;
+	EGameItem _ObjectType = EGameItem::None;
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Property", meta = (AllowPrivateAccess = "true"))
   int32 _DialogId;
+	
+	bool bCanInteract;  // с данным объектом можно взаимодействовать
+  bool bVisible;      // подобрать объект и спрятать его со сцены
+  
+protected:
 };
