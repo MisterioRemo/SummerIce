@@ -31,6 +31,7 @@ protected:
 	
 public:	
 	AInteractableObject(const FObjectInitializer& ObjectInitializer);
+  EGameItem GetObjectType() const;
 
 	// begin InteractInterface
 	virtual void ShowDialogWidget(const FString * Text /* = nullptr*/, const bool & bCanChooseLine /* = false*/) override;

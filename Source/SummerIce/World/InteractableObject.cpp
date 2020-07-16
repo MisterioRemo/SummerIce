@@ -70,3 +70,8 @@ int32 AInteractableObject::GetDialogId() const
 	return _DialogId;
 }
 // end InteractInterface
+
+EGameItem AInteractableObject::GetObjectType() const
+{
+  return _ObjectType;
+}

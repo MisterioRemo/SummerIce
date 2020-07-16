@@ -12,6 +12,9 @@
 #include "Widget/BubbleWidget.h"
 #include "Util/DialogSystem.h"
 
+#include "Util/GameEvent.h"
+#include "World/InteractableObject.h"
+
 
 ALavinia::ALavinia(const FObjectInitializer& ObjectInitializer)
 	:Super(ObjectInitializer)
@@ -59,6 +62,8 @@ void ALavinia::BeginPlay()
 
 	DialogSystem::AddSpeaker(Cast<IInteractInterface>(this));
 	bIsInteracting = false;
+
+  UGameEvent::Instance()->OnAddItemDelegate.AddDynamic(this, &ALavinia::AddGameItem);
 }
 
 void ALavinia::OnPlayerEnterBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
@@ -151,9 +156,13 @@ int32 ALavinia::GetDialogId() const
 // END InteractInterface
 
 
-void ALavinia::AddGameItem(const EGameItem & Item)
+void ALavinia::AddGameItem(AActor * Item)
 {
-	ObtainedItems.AddUnique(Item);
+  if (auto IItem = Cast<AInteractableObject>(Item)) {
+    auto Type = IItem->GetObjectType();
+    if (Type != EGameItem::None)
+	    ObtainedItems.AddUnique(Type);
+  }
 }
 
 bool ALavinia::HasItem(const EGameItem & Item) const

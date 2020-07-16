@@ -50,7 +50,7 @@ public:
 	virtual int32 GetDialogId() const override;
 	// END InteractInterface
 
-	void AddGameItem(const EGameItem & Item);
+	void AddGameItem(AActor * Item);
 	bool HasItem(const EGameItem & Item) const;
 
 private:
