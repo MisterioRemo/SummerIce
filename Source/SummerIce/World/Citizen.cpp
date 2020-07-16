@@ -5,7 +5,7 @@
 #include "Components/ArrowComponent.h"
 
 #include "Components/WidgetComponent.h"
-#include "Util/WidgetLibrary.h"
+#include "Widget/WidgetLibrary.h"
 #include "Widget/BubbleWidget.h"
 
 ACitizen::ACitizen(const FObjectInitializer& ObjectInitializer)

@@ -8,7 +8,7 @@
 #include "Control/FollowingCamera.h"
 
 #include "Components/WidgetComponent.h"
-#include "Util/WidgetLibrary.h"
+#include "Widget/WidgetLibrary.h"
 #include "Widget/BubbleWidget.h"
 #include "Util/DialogSystem.h"
 
