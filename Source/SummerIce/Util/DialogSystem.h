@@ -1,7 +1,7 @@
 ﻿#pragma once
 
-#include "Util/DialogTree.h"
-#include "Interface/InteractInterface.h"
+#include "SummerIce/Util/DialogTree.h"
+#include "SummerIce/Interface/InteractInterface.h"
 
 class ASummerIceGameModeBase;
 

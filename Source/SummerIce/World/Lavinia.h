@@ -1,8 +1,8 @@
 ﻿#pragma once
 
-#include "Interface/InteractInterface.h"
+#include "SummerIce/Interface/InteractInterface.h"
 #include "GameFramework/Pawn.h"
-#include "Util/GameItem.h"
+#include "SummerIce/Util/GameItem.h"
 #include "Lavinia.generated.h"
 
 class UArrowComponent;

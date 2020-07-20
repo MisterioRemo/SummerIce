@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "GameFramework/Pawn.h"
-#include "Interface/InteractInterface.h"
+#include "SummerIce/Interface/InteractInterface.h"
 #include "Citizen.generated.h"
 
 class UArrowComponent;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Util/CharacterEnum.h"
+#include "SummerIce/Util/CharacterEnum.h"
 
 class DialogSystem;
 

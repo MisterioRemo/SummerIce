@@ -5,8 +5,8 @@
 #include "Components/ArrowComponent.h"
 
 #include "Components/WidgetComponent.h"
-#include "Widget/WidgetLibrary.h"
-#include "Widget/BubbleWidget.h"
+#include "SummerIce/Widget/WidgetLibrary.h"
+#include "SummerIce/Widget/BubbleWidget.h"
 
 ACitizen::ACitizen(const FObjectInitializer& ObjectInitializer)
   :Super(ObjectInitializer)

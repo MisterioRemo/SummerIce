@@ -35,8 +35,7 @@ void AFollowingCamera::BeginPlay()
 	_CurrentLocation = FVector(0.0, CAMERA_DISTANCE_TO_OWNER, 57.0f);
 
 	// Основная камера
-	APlayerController * Controller = UGameplayStatics::GetPlayerController(this, 0);
-	Controller->SetViewTarget(this);
+	UGameplayStatics::GetPlayerController(this, 0)->SetViewTarget(this);
 }
 
 void AFollowingCamera::Tick(float DeltaTime)
@@ -44,9 +43,9 @@ void AFollowingCamera::Tick(float DeltaTime)
 	FollowOwner(DeltaTime);
 }
 
-bool AFollowingCamera::WhatShouldWeFollow(APawn * Owner)
+bool AFollowingCamera::WhatShouldWeFollow(APawn * CameraOwner)
 {
-	return (_Owner = Cast<APawn>(Owner));
+	return (_Owner = Cast<APawn>(CameraOwner));
 }
 
 bool AFollowingCamera::FollowOwner(const float & DeltaTime)

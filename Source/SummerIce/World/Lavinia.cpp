@@ -4,16 +4,16 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/ArrowComponent.h"
 
-#include "Control/MyPawnMovementComponent.h"
-#include "Control/FollowingCamera.h"
+#include "SummerIce/Control/MyPawnMovementComponent.h"
+#include "SummerIce/Control/FollowingCamera.h"
 
 #include "Components/WidgetComponent.h"
-#include "Widget/WidgetLibrary.h"
-#include "Widget/BubbleWidget.h"
-#include "Util/DialogSystem.h"
+#include "SummerIce/Widget/WidgetLibrary.h"
+#include "SummerIce/Widget/BubbleWidget.h"
+#include "SummerIce/Util/DialogSystem.h"
 
-#include "Util/GameEvent.h"
-#include "World/InteractableObject.h"
+#include "SummerIce/Util/GameEvent.h"
+#include "SummerIce/World/InteractableObject.h"
 
 
 ALavinia::ALavinia(const FObjectInitializer& ObjectInitializer)

@@ -4,7 +4,7 @@
 #include "Components/BoxComponent.h"
 
 #include "Kismet/GameplayStatics.h"
-#include "Control/MyPlayerController.h"
+#include "SummerIce/Control/MyPlayerController.h"
 
 
 AInteractableObject::AInteractableObject(const FObjectInitializer& ObjectInitializer)

@@ -1,8 +1,8 @@
 ﻿#pragma once
 
 #include "GameFramework/Actor.h"
-#include "Interface/InteractInterface.h"
-#include "Util/GameItem.h"
+#include "SummerIce/Interface/InteractInterface.h"
+#include "SummerIce/Util/GameItem.h"
 #include "InteractableObject.generated.h"
 
 class UPaperSpriteComponent;
