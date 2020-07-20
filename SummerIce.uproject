@@ -4,16 +4,21 @@
 	"Category": "",
 	"Description": "",
 	"Enterprise": true,
-	"Modules": [
-		{
-			"Name": "SummerIce",
-			"Type": "Runtime",
-			"LoadingPhase": "Default",
-			"AdditionalDependencies": [
-				"Engine",
-				"UMG",
-				"CoreUObject"
-			]
-		}
-	]
+  "Modules": [
+    {
+      "Name": "SummerIce",
+      "Type": "Runtime",
+      "LoadingPhase": "Default",
+      "AdditionalDependencies": [
+        "Engine",
+        "UMG",
+        "CoreUObject"
+      ]
+    },    
+    {
+      "Name": "Boost",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    }
+  ]
 }
