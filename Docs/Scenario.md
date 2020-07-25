@@ -1,4 +1,5 @@
 > Извиняюсь за всевозможные ошибки (как грамматические и пунктуационные, так и структурные), здесь выложен черновик.
 
 Основная сюжетная линия игры, на диаграмме смесь событий основной сюжетной линии, действий для получения достижений и т.п.
-![summer_ice_scenario](/summer_ice_scenario.jpg?raw=true)
+
+![](https://github.com/MisterioRemo/SummerIce/blob/develop/Docs/summer_ice_scenario.jpg?raw=true)
