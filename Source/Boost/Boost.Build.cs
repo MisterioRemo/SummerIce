@@ -36,7 +36,7 @@ public class Boost : ModuleRules
 
         PublicSystemIncludePaths.Add(Path.Combine(ThirdPartyPath, "BoostLib", "include/boost_1_73_0"));
 
-        //bUseRTTI = true;
+        bUseRTTI = true;
         //bEnableExceptions = true;
         //PublicDefinitions.Add("BOOST_NO_RTTI");
         bEnableUndefinedIdentifierWarnings = false;
