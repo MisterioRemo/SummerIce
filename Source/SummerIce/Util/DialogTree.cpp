@@ -5,7 +5,7 @@
 #include "DialogTree.h"
 
 #include "Misc/Paths.h"
-#include "SummerIce/ThirdParty/json.hpp"
+#include "json.hpp"
 #include <fstream>
 #include <string>
 

@@ -10,8 +10,8 @@ public class SummerIce : ModuleRules
 	
 		PublicDependencyModuleNames.AddRange(
             new string[] { "Core", "CoreUObject", "Engine", "InputCore", "Paper2D",
-                "UMG", "Slate", "SlateCore" // for UMG
-                , "Boost"
+                "UMG", "Slate", "SlateCore", // for UMG
+                "Boost", "NLohmann"
             });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
