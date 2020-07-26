@@ -1,8 +1,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ScenarioState.h"
 #include <memory>
-#include "SummerIce/Util/ScenarioState.h"
 
 #include "ScenarioStateMachine.generated.h"
 

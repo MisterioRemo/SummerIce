@@ -5,7 +5,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/World.h"
-#include "SummerIce/ScenarioStateMachine.h"
+#include "ScenarioStateMachine.h"
 
 #include <boost/statechart/event.hpp>
 #include <boost/statechart/state_machine.hpp>

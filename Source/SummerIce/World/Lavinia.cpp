@@ -12,7 +12,7 @@
 #include "SummerIce/Widget/BubbleWidget.h"
 #include "SummerIce/Util/DialogSystem.h"
 
-#include "SummerIce/Util/GameEvent.h"
+#include "SummerIce/StateAndTrigger/GameEvent.h"
 #include "SummerIce/World/InteractableObject.h"
 
 
