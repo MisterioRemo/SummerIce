@@ -64,6 +64,7 @@ void ALavinia::BeginPlay()
 	bIsInteracting = false;
 
   UGameEvent::Instance()->OnAddItemDelegate.AddDynamic(this, &ALavinia::AddGameItem);
+  UGameEvent::Instance()->OnRemoveItemDelegate.AddDynamic(this, &ALavinia::RemoveGameItem);
 }
 
 void ALavinia::OnPlayerEnterBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
@@ -156,13 +157,16 @@ int32 ALavinia::GetDialogId() const
 // END InteractInterface
 
 
-void ALavinia::AddGameItem(AActor * Item)
+void ALavinia::AddGameItem(const EGameItem Item)
 {
-  if (auto IItem = Cast<AInteractableObject>(Item)) {
-    auto Type = IItem->GetObjectType();
-    if (Type != EGameItem::None)
-	    ObtainedItems.AddUnique(Type);
-  }
+  if (Item != EGameItem::None)
+	  ObtainedItems.AddUnique(Item);  
+}
+
+void ALavinia::RemoveGameItem(const EGameItem Item)
+{
+  if (Item != EGameItem::None)
+    ObtainedItems.Remove(Item);  
 }
 
 bool ALavinia::HasItem(const EGameItem & Item) const

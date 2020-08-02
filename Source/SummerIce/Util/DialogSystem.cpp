@@ -1,4 +1,6 @@
 ﻿#include "DialogSystem.h"
+#include "GameFramework/Actor.h"
+#include "SummerIce/StateAndTrigger/GameEvent.h"
 
 DialogTree* DialogSystem::_DialogTree;
 
@@ -44,6 +46,11 @@ void DialogSystem::RemoveSpeakers()
 	_Node = nullptr;
 }
 
+AActor * DialogSystem::FindItemInSpeaker()
+{
+  return Cast<AActor>(*_Speakers.Find(ECharacter::Object));
+}
+
 bool DialogSystem::IsDialogValid()
 {
 	if (!_Dialog || _DialogId == -1) {
@@ -80,19 +87,31 @@ bool DialogSystem::IsNodeValid()
 	return false;	
 }
 
-void DialogSystem::ShowCurrentNode()
+bool DialogSystem::ShowCurrentNode()
 {
   // пропустить пустую ноду и перейти к следующей
+  // но в пустой ноде может быть действие - выполнить
   if (_Node->Speaker == ECharacter::Error) {
-    ChooseNextNode();
-    IsNodeValid();
+    
+    if (_Node->Action == EGameEventType::RestartDialog) {
+      _DialogNodeMap[_DialogId] = 0;
+      return false;
+    }
+    else {
+      UGameEvent::Instance()->CallDialogEvent(_Node->Action);
+      ChooseNextNode();
+      if (!IsNodeValid()) return false;  
+    }
+  
   }
 
 	if (const auto& Actor = _Speakers.Find(_Node->Speaker)) {
 		bool bCanChoose = (_LaviniaNodeArray) ? true : false;
 		(*Actor)->ShowDialogWidget(&_Node->Speech, bCanChoose);
+    UGameEvent::Instance()->CallDialogEvent(_Node->Action);
 		ChooseNextNode();
 	}
+  return true;
 }
 
 void DialogSystem::ChooseNextNode()
@@ -131,8 +150,7 @@ bool DialogSystem::StartOrContinueDialog()
 		Speaker.Value->HideDialogWidget();	
 
 	if (IsDialogValid() && IsNodeValid()) {
-		ShowCurrentNode();
-		return true;
+		return ShowCurrentNode();
 	}
 	return false;
 }

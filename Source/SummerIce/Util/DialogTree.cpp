@@ -36,6 +36,9 @@ void DialogTree::LoadDialogFromJson(const int32 & LvlId)
 			Node.Speaker = GetCharacterFromString(J["character"].get<std::string>().c_str());
 			Node.Speech = UTF8_TO_TCHAR(J["speech"].get<std::string>().c_str());
 
+      if (J.find("action") != J.end())
+        Node.Action = GetActionFromString(J["action"].get<std::string>().c_str());
+
 			if (J.find("answers") != J.end()) {
 				for (const auto &Answer : J["answers"]) {
 					ParseNode(Answer);

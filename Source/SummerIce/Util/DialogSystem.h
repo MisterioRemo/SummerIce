@@ -4,6 +4,7 @@
 #include "SummerIce/Interface/InteractInterface.h"
 
 class ASummerIceGameModeBase;
+class AActor;
 
 class SUMMERICE_API DialogSystem
 {
@@ -14,7 +15,7 @@ private:
 	static void LoadDialogTree(const int32 & LvlId);
 	static bool IsDialogValid();
 	static bool IsNodeValid();
-	static void ShowCurrentNode();
+	static bool ShowCurrentNode();
 	static void ChooseNextNode();
 
 protected:
@@ -22,6 +23,9 @@ public:
 	static void AddSpeaker(const IInteractInterface * Actor);
 	static void RemoveSpeaker(const IInteractInterface * Actor);
 	static void RemoveSpeakers();
+
+  static AActor * FindItemInSpeaker();
+
 
 	static void NextNode();
 	static void PrevNode();

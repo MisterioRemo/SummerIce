@@ -51,13 +51,34 @@
               "node_id": 1,
               "character": "Lavinia",
               "speech": "Взять",
-              "answers": []
+              "answers": [
+                {
+                  "node_id": 2,
+                  "character": "",
+                  "speech": "",
+                  "action": "TakeItem",
+                  "answers": [
+                    {
+                      "node_id": 3,
+                      "character": "Lavinia",
+                      "speech": "Ха-ха, что у меня теперь есть!"
+                    }
+                  ]
+                }
+              ]
             },
             {
-              "node_id": 2,
+              "node_id": 4,
               "character": "Lavinia",
               "speech": "Не взять",
-              "answers": []
+              "answers": [
+                {
+                  "node_id": 5,
+                  "character": "",
+                  "speech": "",
+                  "action": "RestartDialog"
+                }
+              ]
             }
           ]
         }

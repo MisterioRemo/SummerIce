@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SummerIce/Util/CharacterEnum.h"
+#include "SummerIce/StateAndTrigger/GameEventType.h"
 
 class DialogSystem;
 
@@ -9,6 +10,7 @@ struct DialogNode
 	ECharacter Speaker;
 	FString Speech;
 	TArray<int32> Answers;	// хранятся id следующих узлов-ответов на данную реплику
+  EGameEventType Action = EGameEventType::NoAction;
 };
 
 class SUMMERICE_API DialogTree
