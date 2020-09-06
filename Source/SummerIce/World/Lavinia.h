@@ -11,37 +11,19 @@ class UCapsuleComponent;
 class UMyPawnMovementComponent;
 class UWidgetComponent;
 class UMainWidget;
+class AMyPlayerController;
 
 UCLASS()
 class SUMMERICE_API ALavinia : public APawn, public IInteractInterface
 {
   GENERATED_BODY()
 
-  friend class UMainWidget;
-
-private:
-	// BEGIN Input
-	void MoveX(float AxisValue);
-	void InteractPressed();
-	void ShowNextSpeach();
-	void ShowPrevSpeach();
-	// END Input
-
-	UFUNCTION()
-	void OnPlayerEnterBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-	UFUNCTION()
-	void OnPlayerExitBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-	
-protected:
-	virtual void BeginPlay() override;
-	virtual UPawnMovementComponent* GetMovementComponent() const override;
+  friend class AMyPlayerController;
 
 public:
 	ALavinia(const FObjectInitializer& ObjectInitializer);
-	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	bool HasItem(const EGameItem & Item) const;
 
 	// BEGIN InteractInterface
 	virtual void ShowDialogWidget(const FString * Text /* = nullptr*/, const bool & bCanChooseLine /* = false*/) override;
@@ -50,9 +32,19 @@ public:
 	virtual int32 GetDialogId() const override;
 	// END InteractInterface
 
-	UFUNCTION() void AddGameItem(const EGameItem Item);
-  UFUNCTION() void RemoveGameItem(const EGameItem Item);
-	bool HasItem(const EGameItem & Item) const;
+protected:
+	virtual void Tick(float DeltaTime) override;
+	virtual void BeginPlay() override;
+	virtual UPawnMovementComponent* GetMovementComponent() const override;
+
+private:
+	void Move(const float & AxisValue);
+
+	UFUNCTION()
+	void OnPlayerEnterBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION()
+	void OnPlayerExitBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lavinia", meta = (AllowPrivateAccess = "true"))
@@ -70,10 +62,8 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lavinia", meta = (AllowPrivateAccess = "true"))
 	UWidgetComponent * _DialogBubbleComponent;
 
-	bool bIsInteracting;
-
+protected:
 	TArray<EGameItem> ObtainedItems;
 
-protected:
 public:
 };

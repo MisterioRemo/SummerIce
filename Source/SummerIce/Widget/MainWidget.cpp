@@ -1,5 +1,5 @@
 #include "MainWidget.h"
-#include "SummerIce/World/Lavinia.h"
+#include "SummerIce/Control/MyPlayerController.h"
 #include "Kismet/GameplayStatics.h"
 
 bool UMainWidget::Initialize()
@@ -14,24 +14,24 @@ void UMainWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
   Super::NativeTick(MyGeometry, InDeltaTime);
 
-  if (!Player) {
-    if (!FindPlayerCharacter())
+  if (!Controller) {
+    if (!FindPlayerController())
       return;
   }
 
-  if (bMoving) Player->MoveX(AxisValue);
+  if (bMoving) Controller->MoveX(AxisValue);
 }
 
-bool UMainWidget::FindPlayerCharacter()
+bool UMainWidget::FindPlayerController()
 {
-  Player = Cast<ALavinia>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
-  return Player ? true : false;
+  Controller = Cast<AMyPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+  return Controller ? true : false;
 }
 
 void UMainWidget::OnPressRightButton()
 {
-  if (Player->bIsInteracting) {
-    Player->ShowNextSpeach();
+  if (Controller->bIsPlayerInteracting) {
+    Controller->ShowNextPressed();
     return;
   }
 
@@ -46,8 +46,8 @@ void UMainWidget::OnReleaseRightButton()
 
 void UMainWidget::OnPressLeftButton()
 {
-  if (Player->bIsInteracting) {
-    Player->ShowPrevSpeach();
+  if (Controller->bIsPlayerInteracting) {
+    Controller->ShowPrevPressed();
     return;
   }
 
@@ -62,9 +62,5 @@ void UMainWidget::OnReleaseLeftButton()
 
 void UMainWidget::OnPressInteractButton()
 {
-  if (!Player) {
-    if (!FindPlayerCharacter())
-      return;
-  }
-  Player->InteractPressed();
+  Controller->InteractPressed();
 }

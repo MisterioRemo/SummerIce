@@ -3,7 +3,7 @@
 #include "Blueprint/UserWidget.h"
 #include "MainWidget.generated.h"
 
-class ALavinia;
+class AMyPlayerController;
 
 UCLASS()
 class SUMMERICE_API UMainWidget : public UUserWidget
@@ -11,7 +11,7 @@ class SUMMERICE_API UMainWidget : public UUserWidget
 	GENERATED_BODY()
 
 private:
-  bool FindPlayerCharacter();
+  bool FindPlayerController();
 
 protected:
   virtual bool Initialize() override;
@@ -33,7 +33,7 @@ protected:
 public:
 
 private:
-  ALavinia * Player;
+  AMyPlayerController * Controller;
 
   bool bMoving;
   float AxisValue;

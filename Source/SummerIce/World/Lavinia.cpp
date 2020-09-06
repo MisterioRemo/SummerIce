@@ -1,4 +1,6 @@
 ﻿#include "Lavinia.h"
+#include "Kismet/GameplayStatics.h"
+#include "SummerIceGameModeBase.h"
 
 #include "PaperSpriteComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -12,7 +14,6 @@
 #include "SummerIce/Widget/BubbleWidget.h"
 #include "SummerIce/Util/DialogSystem.h"
 
-#include "SummerIce/StateAndTrigger/GameEvent.h"
 #include "SummerIce/World/InteractableObject.h"
 
 
@@ -61,10 +62,6 @@ void ALavinia::BeginPlay()
 	}
 
 	DialogSystem::AddSpeaker(Cast<IInteractInterface>(this));
-	bIsInteracting = false;
-
-  UGameEvent::Instance()->OnAddItemDelegate.AddDynamic(this, &ALavinia::AddGameItem);
-  UGameEvent::Instance()->OnRemoveItemDelegate.AddDynamic(this, &ALavinia::RemoveGameItem);
 }
 
 void ALavinia::OnPlayerEnterBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
@@ -96,38 +93,16 @@ void ALavinia::Tick(float DeltaTime)
 	Super::Tick(DeltaTime); 
 }
 
-// Called to bind functionality to input
-void ALavinia::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void ALavinia::Move(const float & AxisValue)
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	InputComponent->BindAxis("MoveX", this, &ALavinia::MoveX);
-	InputComponent->BindAction("Interact", EInputEvent::IE_Pressed, this, &ALavinia::InteractPressed);
-	InputComponent->BindAction("ShowNext", EInputEvent::IE_Pressed, this, &ALavinia::ShowNextSpeach);
-	InputComponent->BindAction("ShowPrev", EInputEvent::IE_Pressed, this, &ALavinia::ShowPrevSpeach);
-}
-
-void ALavinia::MoveX(float AxisValue)
-{
-	// если игрок в процессе разговора, то он не может двигаться
-	if (!bIsInteracting && _MovementComponent
-		&& (_MovementComponent->UpdatedComponent == RootComponent)) {
+	if (_MovementComponent && _MovementComponent->UpdatedComponent == RootComponent) {
 		_MovementComponent->AddInputVector(_PlayerDirection->GetForwardVector() * AxisValue);
 	}	
 }
 
-void ALavinia::InteractPressed()
+bool ALavinia::HasItem(const EGameItem & Item) const
 {
-	bIsInteracting = DialogSystem::StartOrContinueDialog();
-}
-
-void ALavinia::ShowNextSpeach()
-{
-	if (bIsInteracting) DialogSystem::NextNode();	
-}
-
-void ALavinia::ShowPrevSpeach()
-{
-	if (bIsInteracting) DialogSystem::PrevNode();	
+	return ObtainedItems.Contains(Item);
 }
 
 // BEGIN InteractInterface
@@ -155,21 +130,3 @@ int32 ALavinia::GetDialogId() const
 	return -1;
 }
 // END InteractInterface
-
-
-void ALavinia::AddGameItem(const EGameItem Item)
-{
-  if (Item != EGameItem::None)
-	  ObtainedItems.AddUnique(Item);  
-}
-
-void ALavinia::RemoveGameItem(const EGameItem Item)
-{
-  if (Item != EGameItem::None)
-    ObtainedItems.Remove(Item);  
-}
-
-bool ALavinia::HasItem(const EGameItem & Item) const
-{
-	return ObtainedItems.Contains(Item);
-}
