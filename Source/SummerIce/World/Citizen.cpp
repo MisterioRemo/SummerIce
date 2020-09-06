@@ -1,6 +1,6 @@
 ﻿#include "Citizen.h"
 
-#include "PaperSpriteComponent.h"
+#include "PaperFlipbookComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/ArrowComponent.h"
 
@@ -33,15 +33,15 @@ ACitizen::ACitizen(const FObjectInitializer& ObjectInitializer)
   _CitizenDirection = CreateDefaultSubobject<UArrowComponent>(TEXT("PlayerDirection"));
   _CitizenDirection->SetupAttachment(_InnerBoxComponent);
 
-  _CitizenSprite = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("PlayerSprite"));
-  _CitizenSprite->SetupAttachment(_CitizenDirection);
+  _CitizenFlipbook = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("PlayerFlipbook"));
+  _CitizenFlipbook->SetupAttachment(_CitizenDirection);
 
   _DialogBubbleComponent = CreateDefaultSubobject<UWidgetComponent>("DialogBubbleWidget");
   _DialogBubbleComponent->SetupAttachment(RootComponent);
 
-  _InteractiveSprite = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("IneractableIcon"));
-  _InteractiveSprite->SetupAttachment(RootComponent);
-  _InteractiveSprite->SetCollisionProfileName(TEXT("NoCollision"));
+  _InteractiveFlipbook = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("IneractableIcon"));
+  _InteractiveFlipbook->SetupAttachment(RootComponent);
+  _InteractiveFlipbook->SetCollisionProfileName(TEXT("NoCollision"));
 
   // AddDynamic должно вызываться единожды для одной функции,
   // но OnComponentEndOverlap не работает, если "связывать" в конструкторе объекта

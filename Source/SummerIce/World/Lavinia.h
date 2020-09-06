@@ -6,7 +6,7 @@
 #include "Lavinia.generated.h"
 
 class UArrowComponent;
-class UPaperSpriteComponent;
+class UPaperFlipbookComponent;
 class UCapsuleComponent;
 class UMyPawnMovementComponent;
 class UWidgetComponent;
@@ -51,7 +51,7 @@ private:
 	UArrowComponent * _PlayerDirection;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lavinia", meta = (AllowPrivateAccess = "true"))
-	UPaperSpriteComponent *_PlayerSprite;
+  UPaperFlipbookComponent *_PlayerFlipbook;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lavinia", meta = (AllowPrivateAccess = "true"))
 	UCapsuleComponent *_PlayerBody;

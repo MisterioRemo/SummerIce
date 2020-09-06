@@ -4,7 +4,7 @@
 #include "Citizen.generated.h"
 
 class UArrowComponent;
-class UPaperSpriteComponent;
+class UPaperFlipbookComponent;
 class UBoxComponent;
 class UWidgetComponent;
 
@@ -46,7 +46,10 @@ private:
 	UArrowComponent * _CitizenDirection;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
-	UPaperSpriteComponent *_CitizenSprite;
+  UPaperFlipbookComponent *_CitizenFlipbook;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
+  UPaperFlipbookComponent *_InteractiveFlipbook;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
 	UBoxComponent *_InnerBoxComponent;
@@ -62,9 +65,6 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
 	int32 _DialogId = -1;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
-	UPaperSpriteComponent *_InteractiveSprite;
 
 protected:
 public:

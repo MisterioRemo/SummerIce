@@ -5,7 +5,7 @@
 #include "SummerIce/Util/GameItem.h"
 #include "InteractableObject.generated.h"
 
-class UPaperSpriteComponent;
+class UPaperFlipbookComponent;
 class UBoxComponent;
 class UUserWidget;
 
@@ -42,10 +42,10 @@ public:
   
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Property", meta = (AllowPrivateAccess = "true"))
-	UPaperSpriteComponent *_BodySprite;
+  UPaperFlipbookComponent *_BodyFlipbook;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Property", meta = (AllowPrivateAccess = "true"))
-	UPaperSpriteComponent *_InteractiveSprite;
+  UPaperFlipbookComponent *_InteractiveFlipbook;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Property", meta = (AllowPrivateAccess = "true"))
 	UBoxComponent *_BoxComponent;

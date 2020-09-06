@@ -2,7 +2,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "SummerIceGameModeBase.h"
 
-#include "PaperSpriteComponent.h"
+#include "PaperFlipbookComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/ArrowComponent.h"
 
@@ -32,12 +32,12 @@ ALavinia::ALavinia(const FObjectInitializer& ObjectInitializer)
 	_PlayerDirection = CreateDefaultSubobject<UArrowComponent>(TEXT("PlayerDirection"));
 	_PlayerDirection->SetupAttachment(RootComponent);
 	
-	_PlayerSprite = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("PlayerSprite"));
-	_PlayerSprite->SetupAttachment(_PlayerDirection);
-  _PlayerSprite->SetCollisionProfileName(TEXT("Pawn"));
-  //_PlayerSprite->SetGenerateOverlapEvents(true);  
-	_PlayerSprite->OnComponentBeginOverlap.AddDynamic(this, &ALavinia::OnPlayerEnterBoxComponent);
-	_PlayerSprite->OnComponentEndOverlap.AddDynamic(this, &ALavinia::OnPlayerExitBoxComponent);
+  _PlayerFlipbook = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("PlayerFlipbook"));
+  _PlayerFlipbook->SetupAttachment(_PlayerDirection);
+  _PlayerFlipbook->SetCollisionProfileName(TEXT("Pawn"));
+  //_PlayerFlipbook->SetGenerateOverlapEvents(true);  
+  _PlayerFlipbook->OnComponentBeginOverlap.AddDynamic(this, &ALavinia::OnPlayerEnterBoxComponent);
+  _PlayerFlipbook->OnComponentEndOverlap.AddDynamic(this, &ALavinia::OnPlayerExitBoxComponent);
 
 	_MovementComponent = CreateDefaultSubobject<UMyPawnMovementComponent>(TEXT("MovementComponent"));
 	_MovementComponent->UpdatedComponent = RootComponent;

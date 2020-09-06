@@ -1,6 +1,6 @@
 ﻿#include "InteractableObject.h"
 
-#include "PaperSpriteComponent.h"
+#include "PaperFlipbookComponent.h"
 #include "Components/BoxComponent.h"
 
 #include "Kismet/GameplayStatics.h"
@@ -15,13 +15,13 @@ AInteractableObject::AInteractableObject(const FObjectInitializer& ObjectInitial
 	if (!RootComponent)
 		RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 
-	_BodySprite = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("Sprite"));
-	_BodySprite->SetupAttachment(RootComponent);
-  _BodySprite->SetCollisionProfileName(TEXT("NoCollision"));
+	_BodyFlipbook = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Flipbook"));
+	_BodyFlipbook->SetupAttachment(RootComponent);
+  _BodyFlipbook->SetCollisionProfileName(TEXT("NoCollision"));
 
-	_InteractiveSprite = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("Buble"));
-	_InteractiveSprite->SetupAttachment(RootComponent);
-  _InteractiveSprite->SetCollisionProfileName(TEXT("NoCollision"));
+	_InteractiveFlipbook = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Buble"));
+	_InteractiveFlipbook->SetupAttachment(RootComponent);
+  _InteractiveFlipbook->SetCollisionProfileName(TEXT("NoCollision"));
 
 	// Если игрок зашёл в зону действия _BoxComponent, то персонаж может с ним контактировать.
 	// Например, открыть дверь или подобрать предмет.
