@@ -3,7 +3,7 @@
 #pragma warning(disable: 4668) // hide warning and error when include boost
 #pragma warning(disable: 4265) // hide warning class has virtual functions, but destructor is not virtual
 
-#include "CoreMinimal.h"
+#include "SummerIce.h"
 #include "Engine/World.h"
 #include "ScenarioStateMachine.h"
 
@@ -78,7 +78,7 @@ struct StateHouseSurvey: sc::simple_state<StateHouseSurvey, Machine>
 
   sc::result react(const EventMoveToNextState &event)
   {
-    UE_LOG(LogTemp, Warning, TEXT("trans from StateHouseSurvey to StateLeaveHouse or StateMeetFransina. Check timer for explorarion street."));
+    UE_LOG(LogSummer, Warning, TEXT("trans from StateHouseSurvey to StateLeaveHouse or StateMeetFransina. Check timer for explorarion street."));
     float Time = 5.0;// context<Machine>()._Parent->GetWorld()->GetTimeSeconds();
     return (Time < 5.0f * 60.0f) ? transit<StateLeaveHouse>() : transit<StateMeetFransina>();
   }
