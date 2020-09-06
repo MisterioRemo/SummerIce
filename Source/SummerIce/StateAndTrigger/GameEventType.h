@@ -7,6 +7,7 @@ enum class EGameEventType: uint8
   TakeItem,
   RemoveItem,
   RestartDialog,
+  Teleport,
   NoAction
 };
 
@@ -20,6 +21,19 @@ static EGameEventType GetActionFromString(const FString & Name)
     return EGameEventType::RemoveItem;
   else if (Action.Equals("restartdialog"))
     return EGameEventType::RestartDialog;
+  else if (Action.Equals("teleport"))
+    return EGameEventType::Teleport;
 
   return EGameEventType::NoAction;
 }
+
+UENUM(BlueprintType)
+enum class ETeleportLocation: uint8
+{
+  HomeFrontDoor,
+  HomeHallwayRightDoor,
+  HomeHallwayLeftDoor,
+  HomeLivingRoomRightDoor,
+  HomeLivingRoomLeftDoor,
+  None
+};

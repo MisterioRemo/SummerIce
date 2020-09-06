@@ -9,6 +9,7 @@
 // что крайне затруднительно создать static delegate с UPROPERTY
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAddItemDelegate, EGameItem, Item);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTeleportPlayerDelegate, ETeleportLocation, Location);
 
 
 UCLASS()
@@ -32,4 +33,7 @@ public:
 
   UPROPERTY(BlueprintAssignable, Category = "Item Action Delegate")
   FAddItemDelegate OnRemoveItemDelegate;
+
+  UPROPERTY(BlueprintAssignable, Category = "Player Action Delegate")
+  FTeleportPlayerDelegate OnTeleportPlayerDelegate;
 };

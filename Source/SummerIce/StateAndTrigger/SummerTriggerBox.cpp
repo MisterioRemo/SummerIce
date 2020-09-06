@@ -39,6 +39,9 @@ void ASummerTriggerBox::ChooseEvent()
     case EGameEventType::RemoveItem:
       UGameEvent::Instance()->OnRemoveItemDelegate.Broadcast(ItemType);
       break;
+    case EGameEventType::Teleport:
+      UGameEvent::Instance()->OnTeleportPlayerDelegate.Broadcast(TeleportLocation);
+      break;
     default:
       break;
   }

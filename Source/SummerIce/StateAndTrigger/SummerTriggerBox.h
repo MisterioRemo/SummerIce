@@ -41,6 +41,10 @@ protected:
   UPROPERTY(Category = "Events", EditAnywhere, BlueprintReadWrite,
             meta = (EditCondition = "EventType == EGameEventType::TakeItem || EventType == EGameEventType::RemoveItem"))
   EGameItem ItemType = EGameItem::None;
+  
+  UPROPERTY(Category = "Events", EditAnywhere, BlueprintReadWrite,
+            meta = (EditCondition = "EventType == EGameEventType::Teleport"))
+  ETeleportLocation TeleportLocation = ETeleportLocation::None;
 
   UPROPERTY(Category = "Events", EditAnywhere, BlueprintReadWrite, meta = (EditCondition = "false"))
   ECharacter CharacterType = ECharacter::Error;
