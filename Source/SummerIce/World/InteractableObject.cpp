@@ -4,7 +4,9 @@
 #include "Components/BoxComponent.h"
 
 #include "Kismet/GameplayStatics.h"
-#include "SummerIce/Control/MyPlayerController.h"
+#include "Control/MyPlayerController.h"
+
+#include "StateAndTrigger/GameEvent.h"
 
 
 AInteractableObject::AInteractableObject(const FObjectInitializer& ObjectInitializer)
@@ -28,8 +30,8 @@ AInteractableObject::AInteractableObject(const FObjectInitializer& ObjectInitial
 	// Точные размеры задаются в BP.
 	_BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("OuterObjectBoxComponent"));
 	_BoxComponent->SetCollisionProfileName(TEXT("OverlapAll"));
-	_BoxComponent->InitBoxExtent(FVector(16.0f, 100.0f, 16.0f));
-	_BoxComponent->SetRelativeLocation(FVector(0.0f, 100.0f, 0.0f));
+	_BoxComponent->InitBoxExtent(FVector(16.0f, 20.0f, 16.0f));
+	_BoxComponent->SetRelativeLocation(FVector(0.0f, 10.0f, 0.0f));
 	_BoxComponent->SetGenerateOverlapEvents(true);
 	_BoxComponent->SetupAttachment(RootComponent);
 	_BoxComponent->OnComponentBeginOverlap.AddDynamic(this, &AInteractableObject::OnPlayerEnterBoxComponent);
@@ -42,6 +44,11 @@ void AInteractableObject::OnPlayerEnterBoxComponent(UPrimitiveComponent* Overlap
 {
 	bCanInteract = true;
 	OnPopUp(); // вызов в BP, добавление лупы
+
+  if (_EventTiming == EActionTiming::OverlapBegin && OtherActor && OtherActor != this) {
+    //UE_LOG(LogTemp, Warning, TEXT("begin\t over = %s,\t other=%s"), *OverlappedActor->GetName(), *OtherActor->GetName());
+   //ChooseEvent();
+  }
 }
 
 void AInteractableObject::OnPlayerExitBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
@@ -49,6 +56,11 @@ void AInteractableObject::OnPlayerExitBoxComponent(UPrimitiveComponent* Overlapp
 {
 	bCanInteract = false;
 	OnPopUpEnd(); // вызов в BP, удаление лупы
+
+  if (_EventTiming == EActionTiming::OverlapEnd && OtherActor && OtherActor != this) {
+    //UE_LOG(LogTemp, Warning, TEXT("end\t over = %s,\t other=%s"), *OverlappedActor->GetName(), *OtherActor->GetName());
+   //ChooseEvent();
+  }
 }
 
 
@@ -74,4 +86,34 @@ int32 AInteractableObject::GetDialogId() const
 EGameItem AInteractableObject::GetObjectType() const
 {
   return _ObjectType;
+}
+
+EGameEventType AInteractableObject::GetEventType() const
+{
+  return _EventType;
+}
+
+EActionTiming AInteractableObject::GetEventTiming() const
+{
+  return _EventTiming;
+}
+
+
+void AInteractableObject::ChooseEvent() const
+{
+  switch (_EventType) {
+    case EGameEventType::NoAction:
+      break;
+    case EGameEventType::TakeItem:
+      UGameEvent::Instance()->OnAddItemDelegate.Broadcast(_ObjectType);
+      break;
+    case EGameEventType::RemoveItem:
+      UGameEvent::Instance()->OnRemoveItemDelegate.Broadcast(_ObjectType);
+      break;
+    case EGameEventType::Teleport:
+      UGameEvent::Instance()->OnTeleportPlayerDelegate.Broadcast(_TeleportLocation);
+      break;
+    default:
+      break;
+  }
 }

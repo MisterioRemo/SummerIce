@@ -1,8 +1,9 @@
 ﻿#pragma once
 
 #include "GameFramework/Actor.h"
-#include "SummerIce/Interface/InteractInterface.h"
-#include "SummerIce/Util/GameItem.h"
+#include "Interface/InteractInterface.h"
+#include "StateAndTrigger/GameEventType.h"
+#include "Util/GameItem.h"
 #include "InteractableObject.generated.h"
 
 class UPaperFlipbookComponent;
@@ -32,6 +33,9 @@ protected:
 public:	
 	AInteractableObject(const FObjectInitializer& ObjectInitializer);
   EGameItem GetObjectType() const;
+  EGameEventType GetEventType() const;
+  EActionTiming GetEventTiming() const;
+  void ChooseEvent() const;
 
 	// begin InteractInterface
 	virtual void ShowDialogWidget(const FString * Text /* = nullptr*/, const bool & bCanChooseLine /* = false*/) override;
@@ -39,7 +43,24 @@ public:
 	virtual ECharacter GetName() const override;
 	virtual int32 GetDialogId() const override;
 	// end InteractInterface
+
+protected:
+  UPROPERTY(Category = "Events", EditAnywhere, BlueprintReadWrite)
+  EGameEventType _EventType = EGameEventType::NoAction;
+
+  UPROPERTY(Category = "Events", EditAnywhere, BlueprintReadWrite,
+            meta = (EditCondition = "_EventType == EGameEventType::StartDialog"))
+  int32 _DialogId = -1;
+
+
+  UPROPERTY(Category = "Events", EditAnywhere, BlueprintReadWrite,
+            meta = (EditCondition = "_EventType != EGameEventType::NoAction"))
+  EActionTiming _EventTiming = EActionTiming::None;
   
+  UPROPERTY(Category = "Events", EditAnywhere, BlueprintReadWrite,
+            meta = (EditCondition = "_EventType == EGameEventType::Teleport"))
+  ETeleportLocation _TeleportLocation = ETeleportLocation::None;
+
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Property", meta = (AllowPrivateAccess = "true"))
   UPaperFlipbookComponent *_BodyFlipbook;
@@ -52,12 +73,7 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Property", meta = (AllowPrivateAccess = "true"))
 	EGameItem _ObjectType = EGameItem::None;
-
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Property", meta = (AllowPrivateAccess = "true"))
-  int32 _DialogId;
-	
+  	
 	bool bCanInteract;  // с данным объектом можно взаимодействовать
   bool bVisible;      // подобрать объект и спрятать его со сцены
-  
-protected:
 };

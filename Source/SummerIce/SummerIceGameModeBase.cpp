@@ -4,6 +4,8 @@
 #include "Widget/WidgetLibrary.h"
 #include "Util/DialogSystem.h"
 
+#include "EngineUtils.h"
+
 void ASummerIceGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
@@ -28,16 +30,15 @@ int32 ASummerIceGameModeBase::GetLevelIndex() const
 
 void ASummerIceGameModeBase::FindAllSpawnPoint()
 {
-  TArray<AActor*> Array;
-  UGameplayStatics::GetAllActorsOfClass(GetWorld(), ASpawnPoint::StaticClass(), Array);
-
-  for (auto Actor : Array) {
-    if (auto SpawnPoint = Cast<ASpawnPoint>(Actor)) 
-      _SpawnPointsMap.Emplace(SpawnPoint->GetTeleportLocationName(), SpawnPoint);    
+  for (TActorIterator<ASpawnPoint> It(GetWorld()); It; ++It) {
+    _SpawnPointsMap.Emplace((*It)->GetTeleportLocationName(), *It);
   }
 }
 
 const ASpawnPoint* ASummerIceGameModeBase::GetSpawnPoint(const ETeleportLocation & LocationName) const
 {
-  return *_SpawnPointsMap.Find(LocationName);
+  if (const auto Elem = _SpawnPointsMap.Find(LocationName))
+    return *Elem;
+  else return nullptr;
+
 }

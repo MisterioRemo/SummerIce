@@ -1,4 +1,5 @@
 ﻿#include "Lavinia.h"
+#include "SummerIce.h"
 #include "Kismet/GameplayStatics.h"
 #include "SummerIceGameModeBase.h"
 
@@ -6,15 +7,16 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/ArrowComponent.h"
 
-#include "SummerIce/Control/MyPawnMovementComponent.h"
-#include "SummerIce/Control/FollowingCamera.h"
+#include "Control/MyPlayerController.h"
+#include "Control/MyPawnMovementComponent.h"
+#include "Control/FollowingCamera.h"
 
 #include "Components/WidgetComponent.h"
-#include "SummerIce/Widget/WidgetLibrary.h"
-#include "SummerIce/Widget/BubbleWidget.h"
-#include "SummerIce/Util/DialogSystem.h"
+#include "Widget/WidgetLibrary.h"
+#include "Widget/BubbleWidget.h"
+#include "Util/DialogSystem.h"
 
-#include "SummerIce/World/InteractableObject.h"
+#include "World/InteractableObject.h"
 
 
 ALavinia::ALavinia(const FObjectInitializer& ObjectInitializer)
@@ -35,9 +37,7 @@ ALavinia::ALavinia(const FObjectInitializer& ObjectInitializer)
   _PlayerFlipbook = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("PlayerFlipbook"));
   _PlayerFlipbook->SetupAttachment(_PlayerDirection);
   _PlayerFlipbook->SetCollisionProfileName(TEXT("Pawn"));
-  //_PlayerFlipbook->SetGenerateOverlapEvents(true);  
-  _PlayerFlipbook->OnComponentBeginOverlap.AddDynamic(this, &ALavinia::OnPlayerEnterBoxComponent);
-  _PlayerFlipbook->OnComponentEndOverlap.AddDynamic(this, &ALavinia::OnPlayerExitBoxComponent);
+  _PlayerFlipbook->SetGenerateOverlapEvents(true);  
 
 	_MovementComponent = CreateDefaultSubobject<UMyPawnMovementComponent>(TEXT("MovementComponent"));
 	_MovementComponent->UpdatedComponent = RootComponent;
@@ -51,6 +51,9 @@ ALavinia::ALavinia(const FObjectInitializer& ObjectInitializer)
 void ALavinia::BeginPlay()
 {
 	Super::BeginPlay();
+  _Controller = Cast<AMyPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+  check(_Controller);
+
 	AFollowingCamera * Camera = GetWorld()->SpawnActor<AFollowingCamera>();
 	Camera->WhatShouldWeFollow(this);
 
@@ -60,23 +63,27 @@ void ALavinia::BeginPlay()
 		_DialogBubbleComponent->GetUserWidgetObject()->SetVisibility(ESlateVisibility::Hidden);
 		//_DialogBubbleComponent->SetDrawSize(FVector2D(500.0f, 500.0f));
 	}
+  _PlayerBody->OnComponentBeginOverlap.AddDynamic(this, &ALavinia::OnPlayerEnterBox);
+  _PlayerBody->OnComponentEndOverlap.AddDynamic(this, &ALavinia::OnPlayerExitBox);
 
 	DialogSystem::AddSpeaker(Cast<IInteractInterface>(this));
 }
 
-void ALavinia::OnPlayerEnterBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+void ALavinia::OnPlayerEnterBox(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 													UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 													bool bFromSweep, const FHitResult& SweepResult)
 {
+  _Controller->SetInteractableObject(OtherActor);
 	if (OtherComp->GetName().Contains("Outer"))
 		DialogSystem::AddSpeaker(Cast<IInteractInterface>(OtherActor));
 	else if (OtherComp->GetName().Contains("Inner"))
 		DialogSystem::RemoveSpeaker(Cast<IInteractInterface>(OtherActor));
 }
 
-void ALavinia::OnPlayerExitBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+void ALavinia::OnPlayerExitBox(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 												   UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
+  _Controller->SetInteractableObject(nullptr);
   if (OtherComp->GetName().Contains("Outer"))
 		DialogSystem::RemoveSpeaker(Cast<IInteractInterface>(OtherActor));
   else if (OtherComp->GetName().Contains("Inner"))

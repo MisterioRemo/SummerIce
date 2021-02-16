@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SummerIce/Util/GameItem.h"
+#include "Util/GameItem.h"
 #include "StateAndTrigger/GameEventType.h"
 
 #include "GameFramework/PlayerController.h"
@@ -9,6 +9,7 @@
 class UDialogWidget;
 class ASummerIceGameModeBase;
 class ALavinia;
+class AInteractableObject;
 
 UCLASS()
 class SUMMERICE_API AMyPlayerController : public APlayerController
@@ -21,6 +22,8 @@ public:
   UFUNCTION() void AddGameItemToPlayer(const EGameItem Item);
   UFUNCTION() void RemoveGameItemFromPlayer(const EGameItem Item);
   UFUNCTION() void TeleportPlayerTo(const ETeleportLocation Location);
+
+  void SetInteractableObject(AActor * Object);
 
 protected:
 	AMyPlayerController(const FObjectInitializer& ObjectInitializer);
@@ -43,5 +46,6 @@ protected:
 private:
   ASummerIceGameModeBase * _GameMode;
   ALavinia * _Player;
-  bool bIsPlayerInteracting;
+  bool bIsPlayerInteracting; // dialog
+  AInteractableObject * _ObjectPlayerInteratWith;
 };

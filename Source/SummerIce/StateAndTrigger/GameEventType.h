@@ -6,6 +6,7 @@ enum class EGameEventType: uint8
 {
   TakeItem,
   RemoveItem,
+  StartDialog,
   RestartDialog,
   Teleport,
   NoAction
@@ -19,6 +20,8 @@ static EGameEventType GetActionFromString(const FString & Name)
     return EGameEventType::TakeItem;
   else if (Action.Equals("removeitem"))
     return EGameEventType::RemoveItem;
+  else if (Action.Equals("startdialog"))
+    return EGameEventType::StartDialog;
   else if (Action.Equals("restartdialog"))
     return EGameEventType::RestartDialog;
   else if (Action.Equals("teleport"))
@@ -31,9 +34,18 @@ UENUM(BlueprintType)
 enum class ETeleportLocation: uint8
 {
   HomeFrontDoor,
-  HomeHallwayRightDoor,
-  HomeHallwayLeftDoor,
-  HomeLivingRoomRightDoor,
-  HomeLivingRoomLeftDoor,
+  HomeHallway,
+  HomeLivingRoom,
+  HomeBathroom,
+  HomeKitchen,
+  None
+};
+
+UENUM(BlueprintType)
+enum class EActionTiming: uint8
+{
+  OverlapBegin,
+  OverlapEnd,
+  PressInteractBtn,
   None
 };

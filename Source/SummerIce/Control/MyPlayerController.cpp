@@ -1,13 +1,14 @@
 ﻿#include "MyPlayerController.h"
 #include "SummerIce.h"
 #include "World/Lavinia.h"
+#include "World/InteractableObject.h"
 
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
 #include "StateAndTrigger/GameEvent.h"
 #include "SummerIceGameModeBase.h"
 
-#include "SummerIce/Util/DialogSystem.h"
+#include "Util/DialogSystem.h"
 
 AMyPlayerController::AMyPlayerController(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -49,6 +50,11 @@ void AMyPlayerController::MoveX(float AxisValue)
 
 void AMyPlayerController::InteractPressed()
 {
+  if (!bIsPlayerInteracting && _ObjectPlayerInteratWith
+      && _ObjectPlayerInteratWith->GetEventTiming() == EActionTiming::PressInteractBtn) {
+    _ObjectPlayerInteratWith->ChooseEvent();
+  }
+
   bIsPlayerInteracting = DialogSystem::StartOrContinueDialog();
 }
 
@@ -82,8 +88,13 @@ void AMyPlayerController::TeleportPlayerTo(const ETeleportLocation Location)
     return;
 
   if (auto SpawnPoint = _GameMode->GetSpawnPoint(Location)) {
-      _Player->SetActorLocation(SpawnPoint->GetPointLocation());
-      //rotate lavania
+    _Player->SetActorLocation(SpawnPoint->GetPointLocation());
+    //rotate lavinia
   }
   
+}
+
+void AMyPlayerController::SetInteractableObject(AActor * Object)
+{
+  _ObjectPlayerInteratWith = Cast<AInteractableObject>(Object);
 }

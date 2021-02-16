@@ -11,5 +11,6 @@ enum class EGameItem : uint8
 	Letter,
 	Book,
 	Candle,
-	Bottle
+	Bottle,
+  Door
 };
