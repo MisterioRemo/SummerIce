@@ -6,6 +6,8 @@
 ASpawnPoint::ASpawnPoint(const FObjectInitializer& ObjectInitializer)
   :Super(ObjectInitializer)
 {
+  PrimaryActorTick.bCanEverTick = false;
+
   _SpriteComponent = CreateDefaultSubobject<UBillboardComponent>(TEXT("Sprite"));
   SetRootComponent(_SpriteComponent);
   _Direction = CreateDefaultSubobject<UArrowComponent>(TEXT("Direction"));
@@ -13,7 +15,7 @@ ASpawnPoint::ASpawnPoint(const FObjectInitializer& ObjectInitializer)
   _Direction->SetupAttachment(RootComponent);
 
   ConstructorHelpers::FObjectFinder<UTexture2D> Finder
-    (TEXT("Texture2D'/Game/Sprites/Texture/Helper/SpawnPoint.SpawnPoint'"));
+    (TEXT("Texture2D'/Game/Sprite/Texture/Helper/SpawnPoint.SpawnPoint'"));
   if (Finder.Succeeded()) _SpriteComponent->SetSprite(Finder.Object);
 
   _LocationName = ETeleportLocation::None;
