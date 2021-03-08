@@ -34,8 +34,14 @@ AInteractableObject::AInteractableObject(const FObjectInitializer& ObjectInitial
 	_BoxComponent->SetRelativeLocation(FVector(0.0f, 10.0f, 0.0f));
 	_BoxComponent->SetGenerateOverlapEvents(true);
 	_BoxComponent->SetupAttachment(RootComponent);
+}
+
+void AInteractableObject::BeginPlay()
+{
+  Super::BeginPlay();
+
 	_BoxComponent->OnComponentBeginOverlap.AddDynamic(this, &AInteractableObject::OnPlayerEnterBoxComponent);
-	_BoxComponent->OnComponentEndOverlap.AddDynamic(this, &AInteractableObject::OnPlayerExitBoxComponent);	
+	_BoxComponent->OnComponentEndOverlap.AddDynamic(this, &AInteractableObject::OnPlayerExitBoxComponent);
 }
 
 void AInteractableObject::OnPlayerEnterBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
@@ -99,7 +105,7 @@ EActionTiming AInteractableObject::GetEventTiming() const
 }
 
 
-void AInteractableObject::ChooseEvent() const
+void AInteractableObject::ChooseEvent()
 {
   switch (_EventType) {
     case EGameEventType::NoAction:

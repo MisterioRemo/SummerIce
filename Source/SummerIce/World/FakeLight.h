@@ -26,6 +26,7 @@ public:
 	AFakeLight();
   void SetLightOpacity(const float & Opacity);
   void SetLightColor(const FLinearColor & Color);
+  void SwitchLightState(const bool & State);
 
 protected:
 	virtual void BeginPlay() override;
@@ -65,6 +66,7 @@ public:
 
 private:
   UWorld * _World;
+  bool _bDrawMesh;
 
   // ProceduralMesh
   UPROPERTY(VisibleAnywhere)

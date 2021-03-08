@@ -37,7 +37,7 @@ void AFakeLight::BeginPlay()
 void AFakeLight::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-  if (bIsDynamic) UpdateProceduralMesh();  
+  if (bIsDynamic && _bDrawMesh) UpdateProceduralMesh();  
 }
 
 
@@ -96,4 +96,11 @@ void AFakeLight::SetLightOpacity(const float & Opacity)
 void AFakeLight::SetLightColor(const FLinearColor & Color)
 {
   _MaterialInst->SetVectorParameterValue(TEXT("LightColor"), Color);
+}
+
+void AFakeLight::SwitchLightState(const bool & State)
+{
+  _bDrawMesh = State;
+  if (!_bDrawMesh) _ProcMesh->ClearAllMeshSections();
+  else CreateProceduralMesh();
 }

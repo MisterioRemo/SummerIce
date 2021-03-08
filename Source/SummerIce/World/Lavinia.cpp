@@ -63,8 +63,8 @@ void ALavinia::BeginPlay()
 		_DialogBubbleComponent->GetUserWidgetObject()->SetVisibility(ESlateVisibility::Hidden);
 		//_DialogBubbleComponent->SetDrawSize(FVector2D(500.0f, 500.0f));
 	}
-  _PlayerBody->OnComponentBeginOverlap.AddDynamic(this, &ALavinia::OnPlayerEnterBox);
-  _PlayerBody->OnComponentEndOverlap.AddDynamic(this, &ALavinia::OnPlayerExitBox);
+  _PlayerFlipbook->OnComponentBeginOverlap.AddDynamic(this, &ALavinia::OnPlayerEnterBox);
+  _PlayerFlipbook->OnComponentEndOverlap.AddDynamic(this, &ALavinia::OnPlayerExitBox);
 
 	DialogSystem::AddSpeaker(Cast<IInteractInterface>(this));
 }

@@ -14,28 +14,13 @@ UCLASS()
 class SUMMERICE_API AInteractableObject : public AActor, public IInteractInterface
 {
 	GENERATED_BODY()
-
-private:
-	UFUNCTION()
-	void OnPlayerEnterBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-	
-	UFUNCTION()
-	void OnPlayerExitBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-
-protected:
-	// "Выскакивание" иконки, когда игрок неподалёку
-	UFUNCTION(BlueprintImplementableEvent, Category = "Pop up")
-	void OnPopUp();
-
-	UFUNCTION(BlueprintImplementableEvent, Category = "Pop up")
-	void OnPopUpEnd();
 	
 public:	
 	AInteractableObject(const FObjectInitializer& ObjectInitializer);
   EGameItem GetObjectType() const;
   EGameEventType GetEventType() const;
   EActionTiming GetEventTiming() const;
-  void ChooseEvent() const;
+  virtual void ChooseEvent();
 
 	// begin InteractInterface
 	virtual void ShowDialogWidget(const FString * Text /* = nullptr*/, const bool & bCanChooseLine /* = false*/) override;
@@ -43,6 +28,22 @@ public:
 	virtual ECharacter GetName() const override;
 	virtual int32 GetDialogId() const override;
 	// end InteractInterface
+
+protected:
+  void BeginPlay() override;
+	// "Выскакивание" иконки, когда игрок неподалёку
+	UFUNCTION(BlueprintImplementableEvent, Category = "Pop up")
+	void OnPopUp();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Pop up")
+	void OnPopUpEnd();
+
+private:
+	UFUNCTION()
+	void OnPlayerEnterBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	
+	UFUNCTION()
+	void OnPlayerExitBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 protected:
   UPROPERTY(Category = "Events", EditAnywhere, BlueprintReadWrite)
@@ -62,10 +63,10 @@ protected:
   ETeleportLocation _TeleportLocation = ETeleportLocation::None;
 
 private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Property", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Property", meta = (AllowPrivateAccess = "true"))
   UPaperFlipbookComponent *_BodyFlipbook;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Property", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Property", meta = (AllowPrivateAccess = "true"))
   UPaperFlipbookComponent *_InteractiveFlipbook;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Property", meta = (AllowPrivateAccess = "true"))
