@@ -17,13 +17,13 @@ AInteractableObject::AInteractableObject(const FObjectInitializer& ObjectInitial
 	if (!RootComponent)
 		RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 
-	_BodyFlipbook = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Flipbook"));
-	_BodyFlipbook->SetupAttachment(RootComponent);
-  _BodyFlipbook->SetCollisionProfileName(TEXT("NoCollision"));
+	_BodyFlipbookComponent = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Flipbook"));
+	_BodyFlipbookComponent->SetupAttachment(RootComponent);
+  _BodyFlipbookComponent->SetCollisionProfileName(TEXT("NoCollision"));
 
-	_InteractiveFlipbook = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Buble"));
-	_InteractiveFlipbook->SetupAttachment(RootComponent);
-  _InteractiveFlipbook->SetCollisionProfileName(TEXT("NoCollision"));
+	_InteractiveFlipbookComponent = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Buble"));
+	_InteractiveFlipbookComponent->SetupAttachment(RootComponent);
+  _InteractiveFlipbookComponent->SetCollisionProfileName(TEXT("NoCollision"));
 
 	// Если игрок зашёл в зону действия _BoxComponent, то персонаж может с ним контактировать.
 	// Например, открыть дверь или подобрать предмет.
@@ -34,8 +34,17 @@ AInteractableObject::AInteractableObject(const FObjectInitializer& ObjectInitial
 	_BoxComponent->SetRelativeLocation(FVector(0.0f, 10.0f, 0.0f));
 	_BoxComponent->SetGenerateOverlapEvents(true);
 	_BoxComponent->SetupAttachment(RootComponent);
+}
+
+void AInteractableObject::BeginPlay()
+{
+  Super::BeginPlay();
+
+  _InteractiveFlipbook = _InteractiveFlipbookComponent->GetFlipbook();
+  _InteractiveFlipbookComponent->SetFlipbook(nullptr);
+
 	_BoxComponent->OnComponentBeginOverlap.AddDynamic(this, &AInteractableObject::OnPlayerEnterBoxComponent);
-	_BoxComponent->OnComponentEndOverlap.AddDynamic(this, &AInteractableObject::OnPlayerExitBoxComponent);	
+	_BoxComponent->OnComponentEndOverlap.AddDynamic(this, &AInteractableObject::OnPlayerExitBoxComponent);
 }
 
 void AInteractableObject::OnPlayerEnterBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
@@ -43,24 +52,16 @@ void AInteractableObject::OnPlayerEnterBoxComponent(UPrimitiveComponent* Overlap
 													bool bFromSweep, const FHitResult& SweepResult)
 {
 	bCanInteract = true;
+  _InteractiveFlipbookComponent->SetFlipbook(_InteractiveFlipbook);
 	OnPopUp(); // вызов в BP, добавление лупы
-
-  if (_EventTiming == EActionTiming::OverlapBegin && OtherActor && OtherActor != this) {
-    //UE_LOG(LogTemp, Warning, TEXT("begin\t over = %s,\t other=%s"), *OverlappedActor->GetName(), *OtherActor->GetName());
-   //ChooseEvent();
-  }
 }
 
 void AInteractableObject::OnPlayerExitBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 													UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 	bCanInteract = false;
+  _InteractiveFlipbookComponent->SetFlipbook(nullptr);
 	OnPopUpEnd(); // вызов в BP, удаление лупы
-
-  if (_EventTiming == EActionTiming::OverlapEnd && OtherActor && OtherActor != this) {
-    //UE_LOG(LogTemp, Warning, TEXT("end\t over = %s,\t other=%s"), *OverlappedActor->GetName(), *OtherActor->GetName());
-   //ChooseEvent();
-  }
 }
 
 
@@ -99,7 +100,7 @@ EActionTiming AInteractableObject::GetEventTiming() const
 }
 
 
-void AInteractableObject::ChooseEvent() const
+void AInteractableObject::ChooseEvent()
 {
   switch (_EventType) {
     case EGameEventType::NoAction:
