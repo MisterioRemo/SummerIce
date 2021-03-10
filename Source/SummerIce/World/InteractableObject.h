@@ -6,6 +6,7 @@
 #include "Util/GameItem.h"
 #include "InteractableObject.generated.h"
 
+class UPaperFlipbook;
 class UPaperFlipbookComponent;
 class UBoxComponent;
 class UUserWidget;
@@ -53,7 +54,6 @@ protected:
             meta = (EditCondition = "_EventType == EGameEventType::StartDialog"))
   int32 _DialogId = -1;
 
-
   UPROPERTY(Category = "Events", EditAnywhere, BlueprintReadWrite,
             meta = (EditCondition = "_EventType != EGameEventType::NoAction"))
   EActionTiming _EventTiming = EActionTiming::None;
@@ -62,19 +62,20 @@ protected:
             meta = (EditCondition = "_EventType == EGameEventType::Teleport"))
   ETeleportLocation _TeleportLocation = ETeleportLocation::None;
 
-private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Property", meta = (AllowPrivateAccess = "true"))
-  UPaperFlipbookComponent *_BodyFlipbook;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Property")
+  UPaperFlipbookComponent * _BodyFlipbookComponent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Property", meta = (AllowPrivateAccess = "true"))
-  UPaperFlipbookComponent *_InteractiveFlipbook;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Property")
+  UPaperFlipbookComponent * _InteractiveFlipbookComponent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Property", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Property")
 	UBoxComponent *_BoxComponent;
 
 	UPROPERTY(EditAnywhere, Category = "Property", meta = (AllowPrivateAccess = "true"))
 	EGameItem _ObjectType = EGameItem::None;
-  	
+
+private:
+  UPaperFlipbook * _InteractiveFlipbook;
 	bool bCanInteract;  // с данным объектом можно взаимодействовать
   bool bVisible;      // подобрать объект и спрятать его со сцены
 };
