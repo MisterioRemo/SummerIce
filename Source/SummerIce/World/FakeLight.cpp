@@ -22,6 +22,7 @@ void AFakeLight::BeginPlay()
 {
 	Super::BeginPlay();
 
+  _bDrawMesh = true;
   if (Material)
     _MaterialInst = UMaterialInstanceDynamic::Create(Material, NULL);
 
@@ -101,6 +102,11 @@ void AFakeLight::SetLightColor(const FLinearColor & Color)
 void AFakeLight::SwitchLightState(const bool & State)
 {
   _bDrawMesh = State;
-  if (!_bDrawMesh) _ProcMesh->ClearAllMeshSections();
-  else CreateProceduralMesh();
+  if (!_bDrawMesh) {
+    _ProcMesh->ClearAllMeshSections();
+  }
+  else {
+    CreateProceduralMesh();
+    UpdateProceduralMesh();
+  }
 }
