@@ -94,7 +94,7 @@ bool DialogSystem::ShowCurrentNode()
   if (_Node->Speaker == ECharacter::Error) {
     
     if (_Node->Action == EGameEventType::RestartDialog) {
-      _DialogNodeMap[_DialogId] = 0;
+      _DialogNodeMap[_DialogId] = FCString::Atoi(*_Node->ActionData);
       return false;
     }
     else {

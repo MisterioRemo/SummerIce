@@ -11,6 +11,7 @@ struct DialogNode
 	FString Speech;
 	TArray<int32> Answers;	// хранятся id следующих узлов-ответов на данную реплику
   EGameEventType Action = EGameEventType::NoAction;
+  FString ActionData;
 };
 
 class SUMMERICE_API DialogTree
