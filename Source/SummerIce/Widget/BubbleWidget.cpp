@@ -2,14 +2,14 @@
 #include "Blueprint/WidgetTree.h"
 
 UBubbleWidget::UBubbleWidget(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
+  : Super(ObjectInitializer)
 {
 }
 
 bool UBubbleWidget::Initialize()
 {
-	if (!Super::Initialize())
-		return false;
+  if (!Super::Initialize())
+    return false;
 
   _RightArrow = WidgetTree->FindWidget(TEXT("Image_arrow_right"));
   _LeftArrow = WidgetTree->FindWidget(TEXT("Image_arrow_left"));
@@ -17,13 +17,13 @@ bool UBubbleWidget::Initialize()
   _RightArrow->SetVisibility(ESlateVisibility::Hidden);
   _LeftArrow->SetVisibility(ESlateVisibility::Hidden);
 
-	return true;
+  return true;
 }
 
 
 void UBubbleWidget::SetText(const FString & Text)
 {
-	_Text = Text;
+  _Text = Text;
 }
 
 void UBubbleWidget::SetArrowsVisibility(const bool & IsVisible)

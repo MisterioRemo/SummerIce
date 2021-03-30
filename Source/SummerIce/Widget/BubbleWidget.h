@@ -5,17 +5,17 @@
 
 
 UCLASS()
-class SUMMERICE_API UBubbleWidget : public UUserWidget
+class SUMMERICE_API UBubbleWidget: public UUserWidget
 {
-	GENERATED_BODY()
+  GENERATED_BODY()
 
 private:
 protected:
-	virtual bool Initialize() override;
+  virtual bool Initialize() override;
 
 public:
-	UBubbleWidget(const FObjectInitializer& ObjectInitializer);
-	void SetText(const FString & Text);
+  UBubbleWidget(const FObjectInitializer& ObjectInitializer);
+  void SetText(const FString & Text);
   void SetArrowsVisibility(const bool & IsVisible);
   void SetRightArrowVisibility(const bool & IsVisible);
   void SetLeftArrowVisibility(const bool & IsVisible);
@@ -25,8 +25,8 @@ private:
   UWidget * _LeftArrow;
 
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widget Text")
-	FString _Text;
+  UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widget Text")
+  FString _Text;
 
 public:
 };

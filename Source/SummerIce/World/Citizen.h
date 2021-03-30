@@ -9,11 +9,11 @@ class UBoxComponent;
 class UWidgetComponent;
 
 UCLASS()
-class SUMMERICE_API ACitizen : public APawn, public IInteractInterface
+class SUMMERICE_API ACitizen: public APawn, public IInteractInterface
 {
-	GENERATED_BODY()
+  GENERATED_BODY()
 
-private:	
+private:
   UFUNCTION()
   void OnPlayerEnterBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
@@ -21,50 +21,50 @@ private:
   void OnPlayerExitBoxComponent(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 protected:
-	virtual void BeginPlay() override;
-	//virtual void Tick(float DeltaTime) override;
+  virtual void BeginPlay() override;
+  //virtual void Tick(float DeltaTime) override;
 
-	// "Выскакивание" иконки, когда игрок неподалёку
-	UFUNCTION(BlueprintImplementableEvent, Category = "Pop up")
-	void OnPopUp();
+  // "Выскакивание" иконки, когда игрок неподалёку
+  UFUNCTION(BlueprintImplementableEvent, Category = "Pop up")
+  void OnPopUp();
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Pop up")
-	void OnPopUpEnd();
+  UFUNCTION(BlueprintImplementableEvent, Category = "Pop up")
+  void OnPopUpEnd();
 
 public:
-	ACitizen(const FObjectInitializer& ObjectInitializer);
+  ACitizen(const FObjectInitializer& ObjectInitializer);
 
-	// BEGIN InteractInterface
-	virtual void ShowDialogWidget(const FString * Text /* = nullptr*/, const bool & bCanChooseLine /* = false*/) override;
-	virtual void HideDialogWidget() override;
-	virtual ECharacter GetName() const override; 
-	virtual int32 GetDialogId() const override;
-	// END InteractInterface
+  // BEGIN InteractInterface
+  virtual void ShowDialogWidget(const FString * Text /* = nullptr*/, const bool & bCanChooseLine /* = false*/) override;
+  virtual void HideDialogWidget() override;
+  virtual ECharacter GetName() const override;
+  virtual int32 GetDialogId() const override;
+  // END InteractInterface
 
 private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
-	UArrowComponent * _CitizenDirection;
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
+  UArrowComponent * _CitizenDirection;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
   UPaperFlipbookComponent *_CitizenFlipbook;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
   UPaperFlipbookComponent *_InteractiveFlipbook;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
-	UBoxComponent *_InnerBoxComponent;
+  UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
+  UBoxComponent *_InnerBoxComponent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
-	UBoxComponent *_OuterBoxComponent;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
-	UWidgetComponent * _DialogBubbleComponent;
+  UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
+  UBoxComponent *_OuterBoxComponent;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
-	ECharacter _CharacterName;
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
+  UWidgetComponent * _DialogBubbleComponent;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
-	int32 _DialogId = -1;
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
+  ECharacter _CharacterName;
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Citizen", meta = (AllowPrivateAccess = "true"))
+  int32 _DialogId = -1;
 
 protected:
 public:

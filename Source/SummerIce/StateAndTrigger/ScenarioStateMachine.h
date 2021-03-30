@@ -28,6 +28,4 @@ private:
 protected:
 public:
   //FSetStateDelegate OnNewScenarioState;
-
-
 };

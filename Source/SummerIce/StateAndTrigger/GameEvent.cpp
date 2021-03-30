@@ -2,8 +2,9 @@
 #include "Util/DialogSystem.h"
 #include "World/InteractableObject.h"
 
-UGameEvent::UGameEvent() : Super()
-{ }
+UGameEvent::UGameEvent(): Super()
+{
+}
 
 UGameEvent* UGameEvent::Instance()
 {

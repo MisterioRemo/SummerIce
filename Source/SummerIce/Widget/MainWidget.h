@@ -6,9 +6,9 @@
 class AMyPlayerController;
 
 UCLASS()
-class SUMMERICE_API UMainWidget : public UUserWidget
+class SUMMERICE_API UMainWidget: public UUserWidget
 {
-	GENERATED_BODY()
+  GENERATED_BODY()
 
 private:
   bool FindPlayerController();

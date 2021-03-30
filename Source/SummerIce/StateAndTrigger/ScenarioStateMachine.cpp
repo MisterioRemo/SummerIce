@@ -1,7 +1,7 @@
 #include "ScenarioStateMachine.h"
 
 UScenarioStateMachine::UScenarioStateMachine(): Super()
-{ 
+{
   BoostStateMahine = std::make_shared<Machine>();
   BoostStateMahine->set_parent(this);
   BoostStateMahine->initiate();

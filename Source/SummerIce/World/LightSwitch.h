@@ -6,9 +6,9 @@
 
 
 UCLASS()
-class SUMMERICE_API ALightSwitch : public AInteractableObject
+class SUMMERICE_API ALightSwitch: public AInteractableObject
 {
-	GENERATED_BODY()
+  GENERATED_BODY()
 
 public:
   virtual void ChooseEvent() override;
@@ -23,5 +23,4 @@ protected:
 
   UPROPERTY(Category = "Light", EditAnywhere)
   bool bTurnOn;
-	
 };

@@ -38,6 +38,7 @@ void UMainWidget::OnPressRightButton()
   bMoving = true;
   AxisValue = 1.0;
 }
+
 void UMainWidget::OnReleaseRightButton()
 {
   bMoving = false;
@@ -54,6 +55,7 @@ void UMainWidget::OnPressLeftButton()
   bMoving = true;
   AxisValue = -1.0;
 }
+
 void UMainWidget::OnReleaseLeftButton()
 {
   bMoving = false;

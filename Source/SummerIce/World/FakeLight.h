@@ -16,21 +16,19 @@ enum class EFakeLightChannel: uint8
 };
 
 UCLASS()
-class SUMMERICE_API AFakeLight : public AActor
+class SUMMERICE_API AFakeLight: public AActor
 {
-	GENERATED_BODY()
+  GENERATED_BODY()
 
-
-	
-public:	
-	AFakeLight();
+public:
+  AFakeLight();
   void SetLightOpacity(const float & Opacity);
   void SetLightColor(const FLinearColor & Color);
   void SwitchLightState(const bool & State);
 
 protected:
-	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaTime) override;
+  virtual void BeginPlay() override;
+  virtual void Tick(float DeltaTime) override;
 
 private:
   void CreateProceduralMesh();

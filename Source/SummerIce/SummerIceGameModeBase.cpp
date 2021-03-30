@@ -8,8 +8,8 @@
 
 void ASummerIceGameModeBase::BeginPlay()
 {
-	Super::BeginPlay();
-	DialogSystem::LoadDialogTree(GetLevelIndex());
+  Super::BeginPlay();
+  DialogSystem::LoadDialogTree(GetLevelIndex());
   FindAllSpawnPoint();
 
   if (UWidgetLibrary::MainInterfaceClass && !_MainUI) {
@@ -21,12 +21,10 @@ void ASummerIceGameModeBase::BeginPlay()
   }
 }
 
-
 int32 ASummerIceGameModeBase::GetLevelIndex() const
 {
-	return FCString::Atoi(*GetWorld()->GetName().Mid(0, 2));
+  return FCString::Atoi(*GetWorld()->GetName().Mid(0, 2));
 }
-
 
 void ASummerIceGameModeBase::FindAllSpawnPoint()
 {
@@ -39,6 +37,6 @@ const ASpawnPoint* ASummerIceGameModeBase::GetSpawnPoint(const ETeleportLocation
 {
   if (const auto Elem = _SpawnPointsMap.Find(LocationName))
     return *Elem;
-  else return nullptr;
-
+  else
+    return nullptr;
 }

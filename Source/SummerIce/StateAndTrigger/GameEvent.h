@@ -4,7 +4,6 @@
 #include "Util/GameItem.h"
 #include "GameEvent.generated.h"
 
-
 // Класс UGameEvent - singleton, такакя реализация возникла потому,
 // что крайне затруднительно создать static delegate с UPROPERTY
 
@@ -13,10 +12,10 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTeleportPlayerDelegate, ETeleportLo
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FPauseDelegate, uint32, Sec);
 
 UCLASS()
-class SUMMERICE_API UGameEvent : public UObject
+class SUMMERICE_API UGameEvent: public UObject
 {
-	GENERATED_BODY()
-	
+  GENERATED_BODY()
+
 private:
   UGameEvent();
 

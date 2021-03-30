@@ -12,11 +12,11 @@ class ALavinia;
 class AInteractableObject;
 
 UCLASS()
-class SUMMERICE_API AMyPlayerController : public APlayerController
+class SUMMERICE_API AMyPlayerController: public APlayerController
 {
-	GENERATED_BODY()
-    
-  friend class UMainWidget;
+  GENERATED_BODY()
+
+    friend class UMainWidget;
 
 public:
   UFUNCTION() void AddGameItemToPlayer(const EGameItem Item);
@@ -26,8 +26,8 @@ public:
   void SetInteractableObject(AActor * Object);
 
 protected:
-	AMyPlayerController(const FObjectInitializer& ObjectInitializer);
-	virtual void BeginPlay() override;
+  AMyPlayerController(const FObjectInitializer& ObjectInitializer);
+  virtual void BeginPlay() override;
   virtual void OnPossess(APawn * InPawn) override;
 
   // Called to bind functionality to input

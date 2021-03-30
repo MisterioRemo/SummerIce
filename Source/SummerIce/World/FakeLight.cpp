@@ -8,7 +8,7 @@
 AFakeLight::AFakeLight()
 {
   PrimaryActorTick.bCanEverTick = true;
-  
+
   _ProcMesh = CreateDefaultSubobject<UProceduralMeshComponent>("ProceduralMesh");
   _ProcMesh->bUseAsyncCooking = true;
   SetRootComponent(_ProcMesh);
@@ -20,7 +20,7 @@ AFakeLight::AFakeLight()
 
 void AFakeLight::BeginPlay()
 {
-	Super::BeginPlay();
+  Super::BeginPlay();
 
   _bDrawMesh = true;
   if (Material)
@@ -37,8 +37,8 @@ void AFakeLight::BeginPlay()
 
 void AFakeLight::Tick(float DeltaTime)
 {
-	Super::Tick(DeltaTime);
-  if (bIsDynamic && _bDrawMesh) UpdateProceduralMesh();  
+  Super::Tick(DeltaTime);
+  if (bIsDynamic && _bDrawMesh) UpdateProceduralMesh();
 }
 
 
@@ -53,7 +53,7 @@ void AFakeLight::CreateProceduralMesh()
 
   _ProcMesh->SetMaterial(0, _MaterialInst);
   _ProcMesh->CreateMeshSection(0, _Vertices, _Triangles, FOccluderVertexArray(), _UVs,
-                               TArray<FColor>(),TArray<FProcMeshTangent>(), false);
+                               TArray<FColor>(), TArray<FProcMeshTangent>(), false);
 }
 
 void AFakeLight::UpdateProceduralMesh()

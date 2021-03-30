@@ -6,30 +6,30 @@
 class UCameraComponent;
 
 UCLASS()
-class SUMMERICE_API AFollowingCamera : public APawn
+class SUMMERICE_API AFollowingCamera: public APawn
 {
-	GENERATED_BODY()
-	
+  GENERATED_BODY()
+
 public:
-	AFollowingCamera();
+  AFollowingCamera();
 
-	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaTime) override;
+  virtual void BeginPlay() override;
+  virtual void Tick(float DeltaTime) override;
 
-	bool WhatShouldWeFollow(APawn * Owner);
-
-protected:
-	bool FollowOwner(const float & DeltaTime);
+  bool WhatShouldWeFollow(APawn * Owner);
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Other")
-	UCameraComponent * _CameraComponent;
+  bool FollowOwner(const float & DeltaTime);
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Other")
-	APawn * _Owner = nullptr;
+protected:
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Other")
+  UCameraComponent * _CameraComponent;
+
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Other")
+  APawn * _Owner = nullptr;
 
 private:
-	const float CAMERA_INTERP_SPEED = 4.0f;
+  const float CAMERA_INTERP_SPEED = 4.0f;
 
-	FVector _CurrentLocation;  
+  FVector _CurrentLocation;
 };

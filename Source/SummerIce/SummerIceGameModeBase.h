@@ -7,16 +7,16 @@
 class UMainWidget;
 
 UCLASS()
-class SUMMERICE_API ASummerIceGameModeBase : public AGameModeBase
+class SUMMERICE_API ASummerIceGameModeBase: public AGameModeBase
 {
-	GENERATED_BODY()
+  GENERATED_BODY()
 
 public:
-	int32 GetLevelIndex() const;
+  int32 GetLevelIndex() const;
   const ASpawnPoint* GetSpawnPoint(const ETeleportLocation & LocationName) const;
 
 protected:
-	virtual void BeginPlay() override;
+  virtual void BeginPlay() override;
 
 private:
   void FindAllSpawnPoint();

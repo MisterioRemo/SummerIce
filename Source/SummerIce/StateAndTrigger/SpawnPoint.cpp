@@ -15,7 +15,7 @@ ASpawnPoint::ASpawnPoint(const FObjectInitializer& ObjectInitializer)
   _Direction->SetupAttachment(RootComponent);
 
   ConstructorHelpers::FObjectFinder<UTexture2D> Finder
-    (TEXT("Texture2D'/Game/Sprite/Texture/Helper/SpawnPoint.SpawnPoint'"));
+  (TEXT("Texture2D'/Game/Sprite/Texture/Helper/SpawnPoint.SpawnPoint'"));
   if (Finder.Succeeded()) _SpriteComponent->SetSprite(Finder.Object);
 
   _LocationName = ETeleportLocation::None;

@@ -11,8 +11,9 @@
 #include "Util/DialogSystem.h"
 
 AMyPlayerController::AMyPlayerController(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
-{}
+  : Super(ObjectInitializer)
+{
+}
 
 void AMyPlayerController::OnPossess(APawn * InPawn)
 {
@@ -23,7 +24,7 @@ void AMyPlayerController::OnPossess(APawn * InPawn)
 
 void AMyPlayerController::BeginPlay()
 {
-	Super::BeginPlay();
+  Super::BeginPlay();
   _GameMode = Cast<ASummerIceGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
   bIsPlayerInteracting = false;
 
@@ -44,7 +45,7 @@ void AMyPlayerController::SetupInputComponent()
 // BEGIN Input
 void AMyPlayerController::MoveX(float AxisValue)
 {
-	// если игрок в процессе разговора, то он не может двигаться
+  // если игрок в процессе разговора, то он не может двигаться
   if (!bIsPlayerInteracting) _Player->Move(AxisValue);
 }
 
@@ -65,7 +66,7 @@ void AMyPlayerController::ShowNextPressed()
 
 void AMyPlayerController::ShowPrevPressed()
 {
-  if (bIsPlayerInteracting) DialogSystem::PrevNode();  
+  if (bIsPlayerInteracting) DialogSystem::PrevNode();
 }
 
 // END Input
@@ -73,7 +74,7 @@ void AMyPlayerController::ShowPrevPressed()
 void AMyPlayerController::AddGameItemToPlayer(const EGameItem Item)
 {
   if (Item != EGameItem::None)
-    _Player->ObtainedItems.AddUnique(Item);  
+    _Player->ObtainedItems.AddUnique(Item);
 }
 
 void AMyPlayerController::RemoveGameItemFromPlayer(const EGameItem Item)
@@ -91,7 +92,6 @@ void AMyPlayerController::TeleportPlayerTo(const ETeleportLocation Location)
     _Player->SetActorLocation(SpawnPoint->GetPointLocation());
     //rotate lavinia
   }
-  
 }
 
 void AMyPlayerController::SetInteractableObject(AActor * Object)

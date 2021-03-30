@@ -4,9 +4,9 @@
 #include "CachePicture.generated.h"
 
 UCLASS()
-class SUMMERICE_API ACachePicture : public AInteractableObject
+class SUMMERICE_API ACachePicture: public AInteractableObject
 {
-	GENERATED_BODY()
+  GENERATED_BODY()
 
 private:
   enum class EState
@@ -14,7 +14,7 @@ private:
     OnWall,
     OnFloor
   };
-	
+
 public:
   virtual void ChooseEvent() override;
 
