@@ -10,6 +10,7 @@ enum class EGameEventType: uint8
   RestartDialog,
   Teleport,
   Other,
+  Pause,
   NoAction
 };
 
@@ -29,6 +30,8 @@ static EGameEventType GetActionFromString(const FString & Name)
     return EGameEventType::Teleport;
   else if (Action.Equals("other"))
     return EGameEventType::Other;
+  else if (Action.Equals("pause"))
+    return EGameEventType::Pause;
 
   return EGameEventType::NoAction;
 }

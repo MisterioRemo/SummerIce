@@ -50,12 +50,12 @@ void AMyPlayerController::MoveX(float AxisValue)
 
 void AMyPlayerController::InteractPressed()
 {
+  bIsPlayerInteracting = DialogSystem::StartOrContinueDialog();
+
   if (!bIsPlayerInteracting && _ObjectPlayerInteratWith
       && _ObjectPlayerInteratWith->GetEventTiming() == EActionTiming::PressInteractBtn) {
     _ObjectPlayerInteratWith->ChooseEvent();
   }
-
-  bIsPlayerInteracting = DialogSystem::StartOrContinueDialog();
 }
 
 void AMyPlayerController::ShowNextPressed()

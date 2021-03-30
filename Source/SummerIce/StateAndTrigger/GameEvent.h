@@ -10,7 +10,7 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAddItemDelegate, EGameItem, Item);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTeleportPlayerDelegate, ETeleportLocation, Location);
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FPauseDelegate, uint32, Sec);
 
 UCLASS()
 class SUMMERICE_API UGameEvent : public UObject
@@ -36,4 +36,7 @@ public:
 
   UPROPERTY(BlueprintAssignable, Category = "Player Action Delegate")
   FTeleportPlayerDelegate OnTeleportPlayerDelegate;
+
+  UPROPERTY(BlueprintAssignable, Category = "Player Action Delegate")
+  FPauseDelegate OnPausePlayerDelegate;
 };

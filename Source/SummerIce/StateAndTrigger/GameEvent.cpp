@@ -24,13 +24,23 @@ void UGameEvent::CallDialogEvent(EGameEventType & GEType)
     case EGameEventType::TakeItem:
     {
       // lavinia takes item & item became hidden in the world (deleted?)
-      AInteractableObject * Item = Cast<AInteractableObject>(DialogSystem::FindItemInSpeaker());
-      if (Item) OnAddItemDelegate.Broadcast(Item->GetObjectType());
+      if (auto Item = Cast<AInteractableObject>(DialogSystem::FindItemInSpeaker()))
+        OnAddItemDelegate.Broadcast(Item->GetObjectType());
       break;
     }
     //case EGameEventType::RemoveItem:
     //  OnRemoveItemDelegate.Broadcast(Actor);
     //  break;
+    case EGameEventType::Other:
+    {
+      if (auto Item = Cast<AInteractableObject>(DialogSystem::FindItemInSpeaker()))
+        Item->ChooseEvent();
+      break;
+    }
+    case EGameEventType::Pause:
+    {
+
+    }
     default:
       break;
   }
