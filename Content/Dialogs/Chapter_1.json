@@ -6,77 +6,55 @@
         {
           "node_id": 0,
           "character": "Lavinia",
-          "speech": "Привет!",
-          "answers": [
-            {
-              "node_id": 1,
-              "character": "Elizabeth",
-              "speech": "Привет. Это должен быть достаточно длинный текст, чтобы протестировать размер бабла.",
-              "answers": [
-                {
-                  "node_id": 2,
-                  "character": "Lavinia",
-                  "speech": "Есть минутка.",
-                  "answers": [],
-                  "next": 4
-                },
-                {
-                  "node_id": 3,
-                  "character": "Lavinia",
-                  "speech": "Пока.",
-                  "answers": []
-                }
-              ]
-            },
-            {
-              "node_id": 4,
-              "character": "Elizabeth",
-              "speech": "Я спешу.",
-              "answers": [],
-              "next": 3
-            }
-          ]
-        }
-      ]  
-    },
-    {
-      "dialog_id": 1,
-      "nodes": [
-        {
-          "node_id": 0,
-          "character": "",
-          "speech": "",
+          "speech": "Никого не осуждаю, но это реально странный выбор картин.",
           "answers": [
             {
               "node_id": 1,
               "character": "Lavinia",
-              "speech": "Взять",
+              "speech": "Хм, кажется, за одной из них что-то есть.",
               "answers": [
                 {
-                  "node_id": 2,
+                  "node_id": 100,
                   "character": "",
                   "speech": "",
-                  "action": "TakeItem",
                   "answers": [
+                    {
+                      "node_id": 2,
+                      "character": "Lavinia",
+                      "speech": "Проверим-ка…",
+                      "answers": [],
+                      "next": 4
+                    },
                     {
                       "node_id": 3,
                       "character": "Lavinia",
-                      "speech": "Ха-ха, что у меня теперь есть!"
+                      "speech": "Впрочем, всё равно.",
+                      "answers": [
+                        {
+                          "node_id": 1,
+                          "character": "",
+                          "speech": "",
+                          "action": "RestartDialog",
+                          "action_data": "100"
+                        }
+                      ]
                     }
                   ]
-                }
+                }                
               ]
             },
             {
               "node_id": 4,
-              "character": "Lavinia",
-              "speech": "Не взять",
+              "character": "",
+              "speech": "",
+              "action": "Other",
               "answers": [
                 {
                   "node_id": 5,
-                  "character": "",
-                  "speech": "",
-                  "action": "RestartDialog"
+                  "character": "Lavinia",
+                  "speech": "Разумеется, нужен пароль.",
+                  "answers": [],
+                  "action": "Pause"
                 }
               ]
             }
@@ -84,6 +62,7 @@
         }
       ]
     }
+    
 
   ]
 }

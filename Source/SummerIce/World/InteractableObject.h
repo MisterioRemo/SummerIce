@@ -31,7 +31,7 @@ public:
 	// end InteractInterface
 
 protected:
-  void BeginPlay() override;
+  virtual void BeginPlay() override;
 	// "Выскакивание" иконки, когда игрок неподалёку
 	UFUNCTION(BlueprintImplementableEvent, Category = "Pop up")
 	void OnPopUp();
